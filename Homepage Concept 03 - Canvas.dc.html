@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/tokens/colors.css">
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/tokens/typography.css">
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/base.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Josefin+Sans:wght@300;400;500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  html,body{margin:0;height:100%;background:#EDE6D9;}
+  *{box-sizing:border-box;}
+  a,a:visited{color:#211913;} a:hover{color:#9E4B36;}
+  @keyframes floatA{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(7px,-11px) rotate(.45deg)}}
+  @keyframes floatB{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-8px,8px) rotate(-.5deg)}}
+  @keyframes floatC{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(6px,9px) rotate(.35deg)}}
+  @keyframes floatD{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-6px,-7px) rotate(-.3deg)}}
+  @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-16px,10px)}}
+  @keyframes sheen{0%{background-position:-160% 0}100%{background-position:260% 0}}
+  @keyframes blobP{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes blobPlay{0%,100%{transform:scale(1.16)}50%{transform:scale(1.26)}}
+  @keyframes breathe{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.015);filter:brightness(1.03)}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</helmet>
+
+<div class="stage" style="position:fixed;inset:0;display:flex;flex-direction:column;background:#EDE6D9;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;overflow:hidden;">
+
+  <!-- ============ TOP BAR ============ -->
+  <div style="position:relative;z-index:120;display:flex;flex-wrap:wrap;gap:14px 30px;align-items:baseline;justify-content:space-between;padding:20px 30px 16px;background:linear-gradient(#EDE6D9 66%,rgba(237,230,217,0));">
+    <div>
+      <div style="font-family:'Marcellus',serif;font-size:17px;letter-spacing:.30em;text-transform:uppercase;color:#211913;">Sous <span style="font-size:.62em;letter-spacing:.16em;vertical-align:.12em;margin:0 .12em;">le</span> Parasol</div>
+      <div style="font-size:10px;letter-spacing:.30em;text-transform:uppercase;color:#9D8A6B;margin-top:5px;">Eau de Parfum · Five summers</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px;">
+      <span style="font-family:'Marcellus',serif;font-style:italic;font-size:14px;letter-spacing:.02em;color:#9D8A6B;margin-right:2px;">when summer is —</span>
+      <sc-for list="{{ keywords }}" as="k" hint-placeholder-count="5">
+        <button onClick="{{ k.onClick }}" style="{{ k.style }}">{{ k.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ THE FIELD ============ -->
+  <div class="field" onClick="{{ onFieldClick }}" style="position:relative;flex:1;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+
+    <div class="canvas-wrap" style="{{ canvasStyle }}">
+
+      <!-- debossed Roma words (bottom layer) -->
+      <sc-for list="{{ words }}" as="w" hint-placeholder-count="5">
+        <div style="{{ w.style }}">{{ w.text }}</div>
+      </sc-for>
+
+      <!-- connecting threads -->
+      <svg width="{{ canvasW }}" height="{{ canvasH }}" style="position:absolute;inset:0;pointer-events:none;z-index:1;overflow:visible;">
+        <sc-for list="{{ threads }}" as="th" hint-placeholder-count="5">
+          <path d="{{ th.d }}" fill="none" stroke="{{ th.stroke }}" stroke-width="{{ th.width }}" stroke-opacity="{{ th.opacity }}" style="transition:stroke-opacity .9s ease,stroke .9s ease;"></path>
+        </sc-for>
+      </svg>
+
+      <!-- floating tiles -->
+      <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="15">
+        <div style="{{ t.outer }}" onClick="{{ t.onClick }}">
+          <div style="{{ t.floatStyle }}">
+
+            <sc-if value="{{ t.isMedia }}" hint-placeholder-val="{{ true }}">
+              <div style="{{ t.mediaBox }}">
+                <sc-if value="{{ t.img }}" hint-placeholder-val="{{ false }}"><img src="{{ t.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></sc-if>
+                <sc-if value="{{ t.isFilm }}" hint-placeholder-val="{{ true }}">
+                  <div style="position:absolute;inset:0;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.30) 50%,transparent 58%);background-size:220% 100%;animation:sheen 7s linear infinite;pointer-events:none;"></div>
+                  <div style="position:absolute;top:9px;right:10px;width:0;height:0;border-left:9px solid rgba(255,255,255,.9);border-top:6px solid transparent;border-bottom:6px solid transparent;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5));"></div>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ t.isText }}" hint-placeholder-val="{{ true }}">
+              <div style="{{ t.textStyle }}">{{ t.line }}</div>
+            </sc-if>
+
+            <sc-if value="{{ t.isSound }}" hint-placeholder-val="{{ true }}">
+              <div class="sound-blob" style="{{ t.blobStyle }}"></div>
+            </sc-if>
+
+            <sc-if value="{{ t.isTexture }}" hint-placeholder-val="{{ true }}">
+              <div onMouseMove="{{ onTextureMove }}" onMouseLeave="{{ onTextureLeave }}" style="{{ t.mediaBox }}">
+                <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,#e8ddc9 0px,#e2d6bd 1px,#e8ddc9 2px,#eadfcb 3px),repeating-linear-gradient(90deg,rgba(150,125,90,.10) 0px,rgba(150,125,90,0) 1px,rgba(150,125,90,.08) 2px);animation:breathe 9s ease-in-out infinite;"></div>
+                <div class="tx-bloom" style="position:absolute;width:180px;height:180px;left:-999px;top:-999px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(214,168,90,.55),rgba(214,168,90,0) 70%);mix-blend-mode:multiply;opacity:0;transition:opacity 2.6s ease;pointer-events:none;"></div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ t.isInvite }}" hint-placeholder-val="{{ true }}">
+              <div style="{{ t.mediaBox }}">
+                <div style="font-family:'Marcellus',serif;font-size:19px;letter-spacing:.02em;color:#34281B;line-height:1.25;margin-bottom:14px;">Make the summer last.</div>
+                <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+                  <form onSubmit="{{ onSave }}" style="display:flex;flex-direction:column;gap:0;border-bottom:1px solid #9E4B36;padding-bottom:6px;">
+                    <input type="email" required="" placeholder="your email" style="border:0;outline:none;background:transparent;font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.02em;color:#34281B;padding:2px 0;width:100%;">
+                  </form>
+                </sc-if>
+                <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.02em;color:#6B5238;line-height:1.5;">Sent. Look for it<br>when the light changes.</div>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ t.isPlaceholder }}" hint-placeholder-val="{{ true }}">
+              <div style="{{ t.mediaBox }}">
+                <div style="position:absolute;inset:0;background:linear-gradient(150deg,{{ t.phFrom }},{{ t.phTo }});"></div>
+                <div style="position:absolute;left:10px;bottom:9px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:{{ t.ink }};opacity:.5;">to come</div>
+              </div>
+            </sc-if>
+
+            <!-- numbered client-note marker -->
+            <sc-if value="{{ t.showNote }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ t.onNote }}" title="Client note" style="position:absolute;top:-11px;right:-11px;z-index:5;width:26px;height:26px;border-radius:50%;border:1px solid #9E4B36;background:#FBF8F1;color:#9E4B36;font-family:'Space Mono',monospace;font-size:12px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 14px -8px rgba(33,25,19,.6);">{{ t.noteNum }}</button>
+            </sc-if>
+
+          </div>
+        </div>
+      </sc-for>
+
+    </div>
+
+    <!-- paper grain -->
+    <div style="position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:multiply;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+  </div>
+
+  <!-- ============ FOOTER STRIP ============ -->
+  <div style="position:relative;z-index:120;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:12px 30px 16px;">
+    <button onClick="{{ onToggleNotes }}" style="{{ notesBtnStyle }}">{{ notesLabel }}</button>
+    <div style="font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.10em;color:#9D8A6B;text-align:right;">{{ hint }}</div>
+  </div>
+
+  <!-- ============ TILE DETAIL OVERLAY ============ -->
+  <sc-if value="{{ open }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ onCloseOverlay }}" style="position:fixed;inset:0;z-index:300;background:rgba(22,15,10,.62);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:5vh 5vw;">
+      <div onClick="{{ stop }}" style="{{ openFrameStyle }}">
+        <sc-if value="{{ open.img }}" hint-placeholder-val="{{ false }}"><img src="{{ open.img }}" alt="" style="{{ open.imgStyle }}"></sc-if>
+        <sc-if value="{{ open.isSoundCard }}" hint-placeholder-val="{{ false }}">
+          <div style="position:relative;width:100%;aspect-ratio:16/10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;background:linear-gradient(160deg,#EFE7D7,#E5D9C3);">
+            <div class="sound-blob" onClick="{{ onSoundToggle }}" style="{{ soundBlobStyle }}"></div>
+            <button onClick="{{ onSoundToggle }}" style="display:flex;align-items:center;gap:9px;background:transparent;border:0;cursor:pointer;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#9E4B36;">
+              <span style="width:7px;height:7px;border-radius:50%;background:{{ soundDot }};"></span>{{ soundLabel }}
+            </button>
+            <button onClick="{{ onCloseOverlay }}" title="Close" style="position:absolute;top:14px;right:14px;z-index:3;width:34px;height:34px;border-radius:50%;border:1px solid rgba(33,25,19,.25);background:rgba(251,248,241,.7);backdrop-filter:blur(4px);color:#4F3C28;font-family:'Space Mono',monospace;font-size:15px;line-height:1;cursor:pointer;">×</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ open.isTextureCard }}" hint-placeholder-val="{{ false }}">
+          <div onMouseMove="{{ onTextureMove }}" onMouseLeave="{{ onTextureLeave }}" style="position:relative;overflow:hidden;cursor:crosshair;width:100%;aspect-ratio:16/10;">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,#e8ddc9 0px,#e2d6bd 1px,#e8ddc9 2px,#eadfcb 3px),repeating-linear-gradient(90deg,rgba(150,125,90,.10) 0px,rgba(150,125,90,0) 1px,rgba(150,125,90,.08) 2px);animation:breathe 9s ease-in-out infinite;"></div>
+            <div class="tx-bloom" style="position:absolute;width:300px;height:300px;left:-999px;top:-999px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(214,168,90,.6),rgba(214,168,90,0) 70%);mix-blend-mode:multiply;opacity:0;transition:opacity 2.6s ease;pointer-events:none;"></div>
+            <button onClick="{{ onCloseOverlay }}" title="Close" style="position:absolute;top:14px;right:14px;z-index:3;width:34px;height:34px;border-radius:50%;border:1px solid rgba(33,25,19,.25);background:rgba(251,248,241,.7);backdrop-filter:blur(4px);color:#4F3C28;font-family:'Space Mono',monospace;font-size:15px;line-height:1;cursor:pointer;">×</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ open.showText }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1;min-width:0;padding:30px 32px;display:flex;flex-direction:column;justify-content:center;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <span style="width:34px;height:4px;background:{{ open.spine }};"></span>
+            <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#9D8A6B;">{{ open.eyebrow }}</span>
+          </div>
+          <div style="font-family:'Marcellus',serif;font-size:26px;letter-spacing:.02em;color:#211913;line-height:1.15;margin-bottom:12px;">{{ open.title }}</div>
+          <p style="font-family:Helvetica,Arial,sans-serif;font-size:13.5px;line-height:1.65;color:#4F3C28;margin:0 0 18px;">{{ open.caption }}</p>
+          <div style="font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:#9D8A6B;">{{ open.credit }}</div>
+          <sc-if value="{{ open.isFilm }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:20px;display:flex;align-items:center;gap:10px;border:1px dashed #C8A25A;border-radius:5px;padding:10px 12px;background:#FBF6EA;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9E4B36" stroke-width="1.4"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M2 9a10 10 0 0 1 4-4"/></svg>
+              <span style="font-family:'Space Mono',monospace;font-size:10.5px;line-height:1.5;color:#6B5238;">Client note — film is always horizontal. On mobile, a subtle prompt nudges the viewer to rotate the screen.</span>
+            </div>
+          </sc-if>
+          <button onClick="{{ onCloseOverlay }}" style="align-self:flex-start;margin-top:22px;background:transparent;border:1px solid #C6BCB6;border-radius:4px;color:#4F3C28;font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:9px 16px;cursor:pointer;">Close</button>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ CLIENT NOTE POP-UP ============ -->
+  <sc-if value="{{ noteOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ onCloseNote }}" style="position:fixed;inset:0;z-index:320;background:rgba(22,15,10,.4);display:flex;align-items:center;justify-content:center;padding:6vh 6vw;">
+      <div onClick="{{ stop }}" style="max-width:440px;background:#FBF8F1;border:1px solid #cfc0a6;border-radius:8px;box-shadow:0 40px 90px -34px rgba(33,25,19,.7);padding:26px 28px;">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:14px;">
+          <span style="width:26px;height:26px;border-radius:50%;border:1px solid #9E4B36;color:#9E4B36;font-family:'Space Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;">{{ noteOpen.num }}</span>
+          <span style="font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#9D8A6B;">Client note · not shown to visitors</span>
+        </div>
+        <div style="font-family:'Marcellus',serif;font-size:19px;letter-spacing:.01em;color:#211913;margin-bottom:10px;">{{ noteOpen.title }}</div>
+        <p style="font-family:Helvetica,Arial,sans-serif;font-size:13.5px;line-height:1.7;color:#4F3C28;margin:0;">{{ noteOpen.text }}</p>
+        <button onClick="{{ onCloseNote }}" style="margin-top:20px;background:#211913;border:0;border-radius:4px;color:#F6F1E7;font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;padding:10px 18px;cursor:pointer;">Understood</button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;startSummer&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;none&quot;,&quot;options&quot;:[&quot;none&quot;,&quot;bare&quot;,&quot;close&quot;,&quot;raw&quot;,&quot;iced&quot;,&quot;shadow&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Canvas&quot;},&quot;showThreads&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Canvas&quot;},&quot;calmMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  state = { selected: null, notesOn: false, open: null, noteOpen: null, sent: false, soundOn: false, scale: 1 };
+
+  componentDidMount() {
+    if (this.props.startSummer && this.props.startSummer !== 'none') this.state.selected = this.props.startSummer;
+    this._fit = () => {
+      const f = document.querySelector('.field');
+      if (!f) return;
+      const s = Math.min(f.clientWidth / this.CW, f.clientHeight / this.CH);
+      this.setState({ scale: Math.max(0.28, Math.min(s, 1.25)) });
+    };
+    this._fit();
+    window.addEventListener('resize', this._fit);
+    setTimeout(this._fit, 60);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this._fit); if (this._txT) clearTimeout(this._txT); this._stopAudio(); }
+
+  CW = 1440; CH = 900;
+
+  GROUPS = {
+    bare:   { label: 'bare',   ink: '#3f4c54', spine: '#45616F', word: 'NU',      wsize: 460, wx: -50,  wy: 470 },
+    close:  { label: 'close',  ink: '#6a655c', spine: '#8f918a', word: 'FROISSÉ', wsize: 300, wx: 150,  wy: -120 },
+    raw:    { label: 'raw',    ink: '#586045', spine: '#5E6B4E', word: 'CRU',     wsize: 500, wx: 940,  wy: 470 },
+    iced:   { label: 'iced',   ink: '#7a4536', spine: '#9E4B36', word: 'GLACÉ',   wsize: 320, wx: 720,  wy: -110 },
+    shadow: { label: 'shadow', ink: '#6b5636', spine: '#B8945A', word: 'OMBRE',   wsize: 380, wx: 300,  wy: 330 },
+  };
+  ORDER = ['bare', 'close', 'raw', 'iced', 'shadow'];
+
+  // Every summer told through the same block vocabulary. BARE is fully realised;
+  // the others are placeholders until the house supplies assets.
+  ELEMENTS = [
+    // ---- BARE (NU) — the seven blocks ----
+    { id:'b-tex',  g:'bare', kind:'texture', x:150,  y:130, w:230, h:300, note:5,
+      eyebrow:'Texture', title:'Sun-dried linen', caption:'Not a photograph — a surface you can disturb. Run a hand across it and the warmth blooms where you touch, then slowly fades, leaving a trace after you\u2019ve gone.', credit:'Interactive · built, not shot' },
+    { id:'b-art',  g:'bare', kind:'media',   x:250,  y:485, w:205, h:205, img:'assets/bare-malevich.jpg',
+      eyebrow:'Artwork', title:'White on white', caption:'A pale square on a pale ground, tilted a degree, visible only because the two whites are not quite the same white.', credit:'Kazimir Malevich · public domain', note:2 },
+    { id:'b-snd',  g:'bare', kind:'sound',   x:620,  y:150, w:118, h:118, note:3,
+      eyebrow:'Sound', title:'A fragment, overheard', caption:'French, spoken low and close — two people mid-conversation, overlapping, faintly amused. Room tone, a fan, a car outside. It ends without resolving.', credit:'Sound · to be recorded by the house' },
+    { id:'b-txt',  g:'bare', kind:'text',    x:500,  y:495, w:320, h:150, line:'Nothing between the sun and me. Not even a name.', note:4 },
+    { id:'b-crf',  g:'bare', kind:'media',   x:1080, y:445, w:180, h:290, img:'assets/bare-vase-face.jpg',
+      eyebrow:'Craft', title:'A vessel with a face', caption:'One object, photographed as an object — not on a body, not on white. Glazed stoneware, thrown by hand.', credit:'Craft · ceramic, maker to be credited' },
+    { id:'b-flm',  g:'bare', kind:'media',   x:975,  y:120, w:335, h:210, img:'assets/bare-waves.png', isFilm:true,
+      eyebrow:'Film', title:'The surface, from beneath', caption:'Eight seconds of light on water, looped. It plays only while this summer is chosen; the others hold their still frame.', credit:'Film · supplied by the house', note:1 },
+    { id:'b-inv',  g:'bare', kind:'invite',  x:545,  y:730, w:300, h:150, note:6 },
+
+    // ---- CLOSE (FROISSÉ) ----
+    { id:'c-1', g:'close', kind:'media', x:445, y:175, w:175, h:175, img:'assets/craft-face-bowl.jpg',
+      eyebrow:'Craft', title:'A bowl that sleeps', caption:'Placeholder for the FROISSÉ summer — the summer indoors. Breath, heat held in a room.', credit:'Placeholder · asset to come' },
+    { id:'c-2', g:'close', kind:'media', x:815, y:470, w:165, h:235, img:'assets/craft-eye-stair.jpg',
+      eyebrow:'Interior', title:'The watching stair', caption:'Placeholder for the FROISSÉ summer.', credit:'Placeholder · asset to come' },
+
+    // ---- RAW (CRU) ----
+    { id:'r-1', g:'raw', kind:'media', x:360, y:700, w:165, h:180, img:'assets/craft-sun-body.png',
+      eyebrow:'Film still', title:'Into the light', caption:'Placeholder for the CRU summer — volcanic. Black sand, mineral heat, stone that hurts to walk on.', credit:'Placeholder · asset to come' },
+    { id:'r-2', g:'raw', kind:'media', x:1300, y:330, w:120, h:215, img:'assets/craft-eyes-door.jpg',
+      eyebrow:'Craft', title:'The door that looks back', caption:'Placeholder for the CRU summer.', credit:'Placeholder · asset to come' },
+
+    // ---- ICED (GLACÉ) ----
+    { id:'i-1', g:'iced', kind:'media', x:835, y:175, w:165, h:225, img:'assets/craft-stones.png',
+      eyebrow:'Artwork', title:'Three stones, a line', caption:'Placeholder for the GLACÉ summer — the shock of cold water. Glass, shade, the held breath under.', credit:'Placeholder · asset to come' },
+    { id:'i-2', g:'iced', kind:'media', x:870, y:745, w:150, h:150, img:'assets/craft-orange-sun.jpg',
+      eyebrow:'Craft', title:'A ceramic sun', caption:'Placeholder for the GLACÉ summer.', credit:'Placeholder · asset to come' },
+
+    // ---- SHADOW (OMBRE) — held back, mostly empty ----
+    { id:'s-1', g:'shadow', kind:'placeholder', x:1295, y:610, w:125, h:190 },
+    { id:'s-2', g:'shadow', kind:'placeholder', x:175,  y:730, w:150, h:150 },
+  ];
+
+  // client-layer notes (from the brief; never shown to visitors)
+  NOTES = {
+    1: { title:'One film at a time', text:'Only one film ever plays at a time — while its summer is chosen. This keeps the site fast on a phone, and it means the summers you aren\u2019t looking at are literally still. Because the films are always horizontal, mobile shows a subtle prompt nudging the viewer to rotate the screen; the still frame holds until they do.' },
+    2: { title:'The most bare image ever made', text:'Nothing is depicted — what you see is the edge between two nearly identical tones. It works the way the debossed type on the packaging works: you have to look to find the form at all. It is the artwork and the argument.' },
+    3: { title:'Recorded, not cleared', text:'Lifting dialogue from a real New Wave film means clearing it with the rights holder — slow and expensive. Recording our own gets the same texture: two French speakers, one microphone, a hard-surfaced room, no script. It\u2019s ours outright, and cheaper than the clearance letter.' },
+    4: { title:'Written for the house', text:'This line is written for the maison rather than quoted. Most 20th-century verse is still in copyright. If a real quotation is wanted, a public-domain Sappho fragment — broken off mid-thought — is more on-brand than any whole poem.' },
+    5: { title:'The block that carries the smell', text:'Not a photograph — a surface you can disturb. Run a hand across it and the warmth blooms where you touch, then slowly fades, leaving a trace after you’ve gone. This is the one place the site lets someone feel a material instead of looking at a picture of one, and the trace that lingers is the brand’s whole thesis in miniature: what remains after someone has gone.' },
+    6: { title:'Barer than any signup', text:'The promise is inspiration for a longer summer — images, films, fragments in the language of the house. Not a newsletter, not a discount. One field, no persuasion, no second ask. A brand built on restraint cannot beg.' },
+  };
+
+  _center(el){ return { x: el.x + el.w/2, y: el.y + el.h/2 }; }
+  _centroid(g){ const p=this.ELEMENTS.filter(e=>e.g===g).map(e=>this._center(e)); return { x:p.reduce((s,q)=>s+q.x,0)/p.length, y:p.reduce((s,q)=>s+q.y,0)/p.length }; }
+  _path(g){ const c=this._centroid(g); const pts=this.ELEMENTS.filter(e=>e.g===g).map(e=>this._center(e)).sort((a,b)=>Math.atan2(a.y-c.y,a.x-c.x)-Math.atan2(b.y-c.y,b.x-c.x)); if(pts.length<2) return ''; let d='M '+pts[0].x+' '+pts[0].y; for(let i=1;i<pts.length;i++){const p0=pts[i-1],p1=pts[i];const mx=(p0.x+p1.x)/2,my=(p0.y+p1.y)/2;const cx=mx+(c.x-mx)*0.25,cy=my+(c.y-my)*0.25;d+=' Q '+cx+' '+cy+' '+p1.x+' '+p1.y;} return d; }
+
+  select(g){ this.setState(s => ({ selected: s.selected === g ? null : g, open:null, noteOpen:null })); }
+
+  onTextureMove(e){
+    const host = e.currentTarget; const b = host.querySelector('.tx-bloom'); if(!b) return;
+    const r = host.getBoundingClientRect();
+    b.style.transition = 'opacity .15s ease';
+    b.style.left = (e.clientX - r.left) + 'px';
+    b.style.top = (e.clientY - r.top) + 'px';
+    b.style.opacity = '1';
+    if(this._txT) clearTimeout(this._txT);
+    this._txT = setTimeout(()=>{ b.style.transition='opacity 2.6s ease'; b.style.opacity='0'; }, 90);
+  }
+  onTextureLeave(e){ const b=e.currentTarget.querySelector('.tx-bloom'); if(b){ b.style.transition='opacity 2.6s ease'; b.style.opacity='0'; } }
+
+  save(e){ if(e&&e.preventDefault)e.preventDefault(); this.setState({ sent:true }); }
+
+  toggleSound(){
+    const next = !this.state.soundOn;
+    this.setState({ soundOn: next });
+    if(next) this._startAudio(); else this._stopAudio();
+  }
+
+  // Placeholder audio: a low, close room-tone murmur that stands in for the
+  // French dialogue the house will record. Synthesised so the prototype needs
+  // no asset — filtered noise (breath/room) under two slow, detuned voice-like
+  // tones that swell and fade like overlapping speech.
+  _startAudio(){
+    try{
+      const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return;
+      const ctx = this._actx || (this._actx = new AC());
+      if(ctx.state === 'suspended') ctx.resume();
+      const now = ctx.currentTime;
+      const master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+      master.gain.linearRampToValueAtTime(0.16, now + 0.8);
+
+      // room tone: brown-ish noise, heavily low-passed
+      const dur = 2; const buf = ctx.createBuffer(1, ctx.sampleRate*dur, ctx.sampleRate);
+      const d = buf.getChannelData(0); let last = 0;
+      for(let i=0;i<d.length;i++){ const w=(Math.random()*2-1); last=(last+0.02*w)/1.02; d[i]=last*3.2; }
+      const noise = ctx.createBufferSource(); noise.buffer = buf; noise.loop = true;
+      const nf = ctx.createBiquadFilter(); nf.type='lowpass'; nf.frequency.value=520; nf.Q.value=0.6;
+      const ng = ctx.createGain(); ng.gain.value=0.5;
+      noise.connect(nf); nf.connect(ng); ng.connect(master); noise.start();
+
+      // two voice-like tones, murmuring, filtered dark, gently panned
+      const voices = [];
+      const mk = (freq, pan)=>{
+        const o = ctx.createOscillator(); o.type='sawtooth'; o.frequency.value=freq;
+        const vf = ctx.createBiquadFilter(); vf.type='lowpass'; vf.frequency.value=680; vf.Q.value=4;
+        const g = ctx.createGain(); g.gain.value=0.0;
+        const p = ctx.createStereoPanner ? ctx.createStereoPanner() : null; if(p) p.pan.value=pan;
+        o.connect(vf); vf.connect(g); g.connect(p||master); if(p) p.connect(master); o.start();
+        // slow random swells to imitate overlapping speech
+        const swell = ()=>{ if(!this._audioAlive) return; const t=ctx.currentTime; const up=0.4+Math.random()*0.7;
+          g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value,t);
+          g.gain.linearRampToValueAtTime(0.05+Math.random()*0.06, t+up);
+          const hold=0.25+Math.random()*0.5; g.gain.linearRampToValueAtTime(0.0, t+up+hold);
+          vf.frequency.setValueAtTime(520+Math.random()*400, t);
+          this._swellT.push(setTimeout(swell, (up+hold+Math.random()*0.5)*1000)); };
+        swell(); voices.push({o,g,vf,p});
+      };
+      this._audioAlive = true; this._swellT = [];
+      mk(150, -0.35); mk(190, 0.4);
+      this._audio = { ctx, master, noise, voices };
+    }catch(err){}
+  }
+  _stopAudio(){
+    this._audioAlive = false;
+    if(this._swellT){ this._swellT.forEach(clearTimeout); this._swellT=[]; }
+    const a = this._audio; if(!a) return; const ctx=a.ctx; const t=ctx.currentTime;
+    try{ a.master.gain.cancelScheduledValues(t); a.master.gain.setValueAtTime(a.master.gain.value,t); a.master.gain.linearRampToValueAtTime(0, t+0.6); }catch(e){}
+    setTimeout(()=>{ try{ a.noise.stop(); a.voices.forEach(v=>v.o.stop()); }catch(e){} this._audio=null; }, 700);
+  }
+
+  renderVals(){
+    const p = this.props||{};
+    const sel = this.state.selected;
+    const scale = this.state.scale;
+    const calm = !!p.calmMotion;
+    const showThreads = p.showThreads ?? true;
+
+    // keyword selectors
+    const keywords = this.ORDER.map(g => {
+      const on = sel === g;
+      const style = [
+        "font-family:'Josefin Sans',sans-serif","font-size:15px","letter-spacing:.05em",
+        "background:none","border:0","padding:0 0 3px","cursor:pointer",
+        "color:"+(on?'#9E4B36':'#211913'),
+        "opacity:"+(sel===null?'0.85':on?'1':'0.32'),
+        "font-weight:"+(on?'500':'300'),
+        "border-bottom:1.5px solid "+(on?'#9E4B36':'transparent'),
+        "transition:color .4s ease,opacity .4s ease"
+      ].join(';');
+      return { label: this.GROUPS[g].label, style, onClick: () => this.select(g) };
+    });
+
+    // debossed words
+    const words = this.ORDER.map((g,i) => {
+      const G = this.GROUPS[g]; const on = sel===g;
+      const style = [
+        "position:absolute","left:"+G.wx+"px","top:"+G.wy+"px","z-index:0",
+        "font-family:'Marcellus',serif","font-size:"+G.wsize+"px","line-height:.8",
+        "letter-spacing:.01em","text-transform:uppercase","white-space:nowrap",
+        "pointer-events:none","user-select:none",
+        "color:"+(on?'#E2D8C4':'#E9E1D2'),
+        "text-shadow:"+(on
+          ? "-2px -2px 1px rgba(255,255,255,.9),2px 3px 3px rgba(120,95,60,.34)"
+          : "-1px -1px 1px rgba(255,255,255,.7),1px 2px 2px rgba(120,95,60,.15)"),
+        "opacity:"+(sel===null?'0.85':on?'1':'0.18'),
+        "transition:opacity 1.2s ease,color 1.2s ease,text-shadow 1.2s ease",
+        calm ? "" : "animation:drift "+(80+i*14)+"s ease-in-out "+(i*3)+"s infinite"
+      ].filter(Boolean).join(';');
+      return { text: G.word, style };
+    });
+
+    // threads
+    const threads = this.ORDER.map(g => {
+      const on = sel===g; const dim = sel!==null && !on;
+      return { d: this._path(g), stroke: on?'#7A5233':'#231E19', width: on?1.2:0.8,
+        opacity: !showThreads?0 : on?0.5 : dim?0.04 : 0.12 };
+    });
+
+    // tiles
+    const floats = ['floatA','floatB','floatC','floatD'];
+    const tiles = this.ELEMENTS.map((el,i) => {
+      const c = this._center(el); const G = this.GROUPS[el.g];
+      let tx=0,ty=0,s=1,blur=0,op=0.95,z=10;
+      if(sel!==null){
+        if(el.g===sel){ const gc=this._centroid(el.g); tx=(gc.x-c.x)*0.14; ty=(gc.y-c.y)*0.14; s=1.06; op=1; z=60; }
+        else { tx=(c.x-this.CW/2)*0.10; ty=(c.y-this.CH/2)*0.10; s=0.86; blur=4; op=0.28; z=4; }
+      }
+      const outer = [
+        "position:absolute","left:"+el.x+"px","top:"+el.y+"px","width:"+el.w+"px",
+        "z-index:"+z,"cursor:pointer",
+        "transform:translate("+tx+"px,"+ty+"px) scale("+s+")",
+        "filter:"+(blur?"blur("+blur+"px)":"none"),"opacity:"+op,
+        "transition:transform .95s cubic-bezier(.22,.61,.36,1),filter .8s ease,opacity .8s ease"
+      ].join(';');
+      const dur = 11 + (i%5)*1.7; const delay=(i%7)*0.7;
+      const floatStyle = "position:relative;" + (calm ? "" : "animation:"+dur+"s ease-in-out "+delay+"s infinite "+floats[i%4]);
+      const mediaBox = "position:relative;width:"+el.w+"px;height:"+el.h+"px;overflow:hidden;border-radius:3px;box-shadow:0 20px 46px -30px rgba(35,28,20,.6),0 3px 10px -6px rgba(35,28,20,.35);";
+      const inviteBox = "position:relative;width:"+el.w+"px;padding:16px 18px 14px;background:#F6F1E7;border:1px solid rgba(33,25,19,.10);border-radius:3px;box-shadow:0 20px 46px -30px rgba(35,28,20,.5);";
+
+      const isPh = el.kind==='placeholder';
+      const showNote = this.state.notesOn && !!el.note;
+
+      return {
+        key: el.id, outer, floatStyle,
+        isMedia: el.kind==='media', isText: el.kind==='text', isSound: el.kind==='sound',
+        isTexture: el.kind==='texture', isInvite: el.kind==='invite', isPlaceholder: isPh,
+        isFilm: !!el.isFilm,
+        img: el.img,
+        mediaBox: el.kind==='invite' ? inviteBox : mediaBox,
+        line: el.line,
+        textStyle: "font-family:'Marcellus',serif;font-size:20px;font-style:italic;line-height:1.4;letter-spacing:.01em;color:"+G.ink+";width:"+el.w+"px;",
+        blobStyle: "width:"+el.w+"px;height:"+el.h+"px;border-radius:50% 48% 52% 46%;background:radial-gradient(circle at 38% 32%,#e9dcc2,#cdb488 78%);box-shadow:inset 0 6px 18px rgba(255,255,255,.55),0 18px 40px -24px rgba(35,28,20,.6);" + (calm?"":"animation:"+(this.state.soundOn?'blobPlay 1.6s':'blobP 6s')+" ease-in-out infinite;"),
+        ink: G.ink,
+        phFrom: this._tint(G.spine,0.62), phTo: this._tint(G.spine,0.42),
+        showNote, noteNum: el.note ? String.fromCharCode(0x2460 + (el.note-1)) : '',
+        onNote: (e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); this.setState({ noteOpen: { num:String.fromCharCode(0x2460+(el.note-1)), title:this.NOTES[el.note].title, text:this.NOTES[el.note].text } }); },
+        onClick: (e) => {
+          if(e&&e.stopPropagation) e.stopPropagation();
+          // Click any element -> its summer story floats forward, others mute.
+          if(this.state.selected !== el.g){ this.select(el.g); return; }
+          // Second click on an already-focused tile -> its content card.
+          if(el.kind==='invite'||el.kind==='placeholder') return;
+          this.setState({ open: { kind:el.kind, img:el.img||'', eyebrow:el.eyebrow, title:el.title, caption:el.caption, credit:el.credit, isFilm:!!el.isFilm, spine:G.spine, land:!!el.isFilm } });
+        },
+      };
+    });
+
+    const open = this.state.open;
+    const openFrameStyle = open ? (
+      (open.kind==='texture'||open.kind==='sound')
+        ? "display:flex;max-width:1000px;width:100%;background:#F6F1E7;border-radius:6px;overflow:hidden;box-shadow:0 50px 120px -40px rgba(0,0,0,.7);"
+      : open.land
+        ? "display:flex;flex-direction:column;max-width:820px;width:100%;background:#F6F1E7;border-radius:6px;overflow:hidden;box-shadow:0 50px 120px -40px rgba(0,0,0,.7);"
+        : "display:flex;flex-direction:row;max-width:760px;width:100%;background:#F6F1E7;border-radius:6px;overflow:hidden;box-shadow:0 50px 120px -40px rgba(0,0,0,.7);max-height:88vh;"
+    ) : "";
+    const openImgStyle = open ? (
+      open.land
+        ? "width:100%;height:auto;max-height:52vh;object-fit:cover;display:block;"
+        : "width:44%;object-fit:cover;display:block;align-self:stretch;"
+    ) : "";
+
+    return {
+      keywords, words, threads, tiles,
+      canvasW: this.CW, canvasH: this.CH,
+      canvasStyle: "position:relative;width:"+this.CW+"px;height:"+this.CH+"px;flex:none;transform:scale("+scale+");transform-origin:center center;",
+      notesOn: this.state.notesOn,
+      notesLabel: this.state.notesOn ? 'notes off' : 'notes',
+      notesBtnStyle: [
+        "background:"+(this.state.notesOn?'#211913':'transparent'),
+        "color:"+(this.state.notesOn?'#F6F1E7':'#9D8A6B'),
+        "border:1px solid "+(this.state.notesOn?'#211913':'rgba(33,25,19,.22)'),
+        "border-radius:4px","padding:8px 15px","cursor:pointer",
+        "font-family:'Space Mono',monospace","font-size:10px","letter-spacing:.18em","text-transform:uppercase",
+        "transition:all .3s ease"
+      ].join(';'),
+      hint: sel ? '↑ '+this.GROUPS[sel].label+' — the others rest. tap a focused tile to open it · tap the word again to release.' : 'tap anything to draw its summer forward',
+      open: open ? Object.assign({}, open, { imgStyle: openImgStyle, isSoundCard: open.kind==='sound', isTextureCard: open.kind==='texture', showText: open.kind!=='texture' && open.kind!=='sound' }) : null, openFrameStyle,
+      soundLabel: this.state.soundOn ? 'sound on — tap to stop' : 'turn on the sound',
+      soundDot: this.state.soundOn ? '#9E4B36' : 'rgba(158,75,54,.35)',
+      soundBlobStyle: "cursor:pointer;width:190px;height:190px;border-radius:50% 48% 52% 46%;background:radial-gradient(circle at 38% 32%,#e9dcc2,#cdb488 78%);box-shadow:inset 0 8px 22px rgba(255,255,255,.55),0 22px 50px -26px rgba(35,28,20,.6);animation:"+(this.state.soundOn?'blobPlay 1.6s':'blobP 6s')+" ease-in-out infinite;",
+      onKeyword: (g)=>this.select(g),
+      onFieldClick: ()=>{ if(this.state.selected!==null||this.state.open||this.state.noteOpen) this.setState({selected:null,open:null,noteOpen:null}); },
+      onToggleNotes: ()=>this.setState(s=>({notesOn:!s.notesOn})),
+      onCloseOverlay: ()=>{ if(this.state.soundOn) this._stopAudio(); this.setState({open:null,soundOn:false}); },
+      onSoundToggle: (e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); this.toggleSound(); },
+      onCloseNote: ()=>this.setState({noteOpen:null}),
+      noteOpen: this.state.noteOpen,
+      onTextureMove: (e)=>this.onTextureMove(e),
+      onTextureLeave: (e)=>this.onTextureLeave(e),
+      onSave: (e)=>this.save(e),
+      notSent: !this.state.sent, sent: this.state.sent,
+      stop: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); },
+    };
+  }
+
+  _tint(hex, amt){
+    // mix hex toward paper (#EDE6D9) by amt (0..1 = fully paper)
+    const P=[237,230,217]; const h=hex.replace('#',''); const r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+    const mix=(a,p)=>Math.round(a+(p-a)*amt);
+    return 'rgb('+mix(r,P[0])+','+mix(g,P[1])+','+mix(b,P[2])+')';
+  }
+}
+</script>
+</body>
+</html>

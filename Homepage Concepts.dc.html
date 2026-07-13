@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ext-resource-dependency" content="Prototype-standalone.html" data-resource-id="c02proto" />
+<script src="./support.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#211913">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#211913"/>
+    <g fill="none" stroke="#C8AC74" stroke-width="6">
+      <path d="M600 250 a230 230 0 0 1 230 230 H370 a230 230 0 0 1 230 -230 Z"/>
+      <line x1="600" y1="250" x2="600" y2="560"/>
+      <path d="M370 480 q115 -60 230 0 q115 60 230 0"/>
+    </g>
+    <text x="600" y="650" text-anchor="middle" fill="#C8AC74" font-family="Georgia, serif" font-size="48" letter-spacing="8">SOUS LE PARASOL</text>
+  </svg>
+</template>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/tokens/colors.css">
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/tokens/typography.css">
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/tokens/elevation.css">
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/base.css">
+<link rel="stylesheet" href="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/styles.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=Josefin+Sans:wght@300;400;500&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap">
+<script src="_ds/sous-le-parasol-design-system-f5c8cc9b-0c32-4434-b042-8dc78aaf1cce/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background: #6b6256; }
+  @keyframes slpEmerge { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  @keyframes slpFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slpFloatA { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+  @keyframes slpFloatB { 0%,100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+  @keyframes slpFloatC { 0%,100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-6px) translateX(4px); } }
+  @keyframes slpDrift { 0% { transform: translateX(0); } 100% { transform: translateX(-42px); } }
+  @keyframes slpZoom { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.34); opacity: 0.82; } }
+  @keyframes slpSurface { 0%,16% { opacity: 0; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1); } 84%,100% { opacity: 0; transform: scale(0.9); } }
+  @keyframes slpPulse { 0%,100% { opacity: 0.45; } 50% { opacity: 1; } }
+  @keyframes slpRipple { 0% { transform: scale(0.5); opacity: 0.6; } 100% { transform: scale(2.4); opacity: 0; } }
+  @keyframes slpBloom { 0% { opacity: 0; transform: scale(0.3); } 25% { opacity: 0.6; } 100% { opacity: 0; transform: scale(1.9); } }
+  @keyframes slpRise { 0% { opacity: 0; transform: translateY(30px); } 22% { opacity: 1; } 62% { opacity: 1; } 100% { opacity: 0; transform: translateY(-34px); } }
+  @keyframes slpHold { 0%,100% { box-shadow: 0 0 0 0 rgba(166,192,206,0); } 50% { box-shadow: 0 0 20px 1px rgba(166,192,206,0.4); } }
+  @keyframes slpFilmOpen { 0%,12% { transform: scale(0.5); opacity: 0; } 34%,86% { transform: scale(1); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes slpScan { 0% { left: -32%; } 100% { left: 132%; } }
+  @media (prefers-reduced-motion: no-preference) {
+    [data-deck-active] .em { animation: slpEmerge 0.85s cubic-bezier(0.2,0.7,0.2,1) both; }
+    [data-deck-active] .fade { animation: slpFadeIn 1.1s ease both; }
+    [data-deck-active] .fa { animation: slpFloatA 7s ease-in-out infinite; }
+    [data-deck-active] .fb { animation: slpFloatB 8.5s ease-in-out infinite; }
+    [data-deck-active] .fc { animation: slpFloatC 9.5s ease-in-out infinite; }
+    [data-deck-active] .drift { animation: slpDrift 19s ease-in-out infinite alternate; }
+    [data-deck-active] .zoom { animation: slpZoom 9s ease-in-out infinite alternate; }
+    [data-deck-active] .surf { animation: slpSurface 6.5s ease-in-out infinite; }
+    [data-deck-active] .pulse { animation: slpPulse 3.4s ease-in-out infinite; }
+    [data-deck-active] .ripple { animation: slpRipple 3.6s ease-out infinite; }
+    [data-deck-active] .bloom { animation: slpBloom 3.6s ease-out infinite; }
+    [data-deck-active] .rise { animation: slpRise 6.5s ease-in-out infinite; }
+    [data-deck-active] .hold { animation: slpHold 3.2s ease-in-out infinite; }
+    [data-deck-active] .filmopen { animation: slpFilmOpen 7s ease-in-out infinite; }
+    [data-deck-active] .scan { animation: slpScan 3.4s linear infinite; }
+  }
+  .deck-root.no-motion * { animation: none !important; }
+  .deck-root.no-stamp .sketch-stamp { display: none !important; }
+  .deck-root.paper-tex .paper-slide::after { content: ''; position: absolute; inset: 0; background: url(assets/texture-canvas-shadow.png) center/cover; mix-blend-mode: multiply; opacity: 0.13; pointer-events: none; }
+</style>
+</helmet>
+
+<div class="deck-root {{ rootClass }}" style="position:relative;">
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1280" height="720" hint-size="100%,100%" data-uneditable="">
+
+  <!-- 0 · COVER -->
+  <section data-label="Cover" data-screen-label="Cover" data-speaker-notes="Three homepage directions for the pre-launch house. The one line that holds them all: summer, found again." style="background:#211913; color:#F6F1E7; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 80px; overflow:hidden;">
+    <div class="em" style="font-family:var(--font-deco); font-size:13px; letter-spacing:0.34em; text-transform:uppercase; color:#A99B82; margin-bottom:38px;">Homepage · Creative Directions</div>
+    <div class="em" style="animation-delay:0.1s; font-family:var(--font-display); font-size:74px; text-transform:uppercase; letter-spacing:0.07em; line-height:1.04; text-align:center; color:#F6F1E7;">Sous <span style="font-size:0.46em; letter-spacing:0.14em; vertical-align:0.18em; margin:0 0.14em;">le</span> Parasol</div>
+    <div class="em" style="animation-delay:0.2s; font-family:var(--font-deco); letter-spacing:0.24em; text-transform:uppercase; font-size:15px; color:#C8AC74; border-top:1px solid rgba(246,241,231,0.28); border-bottom:1px solid rgba(246,241,231,0.28); padding:9px 18px; margin-top:54px;">Three directions for the homepage</div>
+    <div class="em" style="animation-delay:0.32s; font-family:var(--font-display); font-style:italic; font-size:23px; letter-spacing:0.02em; color:#A99B82; margin-top:46px;">Summer, found again.</div>
+    <div class="em" style="animation-delay:0.42s; position:absolute; bottom:42px; display:flex; gap:22px; font-family:'Space Mono',ui-monospace,monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#6f6552;">
+      <span>01 · Summer Collection</span><span>02 · Disappearing Guides</span><span>03 · The Missing Word</span>
+    </div>
+  </section>
+
+  <!-- 1.1 · CONCEPT 01 — IDEA -->
+  <section data-label="01 · Idea" data-screen-label="01 Idea" data-speaker-notes="A homepage that behaves like a summer you almost remember — an album of found moments, each in its own frame, suspended over one continuous surface of sand, cotton, sun-bleached linen. Five of the album frames are the mood reels." style="background:#211913; color:#F6F1E7; display:flex; align-items:center; padding:0 92px; gap:66px; overflow:hidden;">
+    <div class="em" style="font-family:var(--font-display); font-size:230px; line-height:0.78; color:#B8945A; flex:none; letter-spacing:0.02em;">01</div>
+    <div style="max-width:560px;">
+      <div class="em" style="animation-delay:0.08s; display:flex; align-items:center; gap:16px; margin-bottom:22px;"><span style="width:54px; height:4px; background:#B8945A; display:block;"></span><span style="font-family:var(--font-deco); font-size:13px; letter-spacing:0.34em; text-transform:uppercase; color:#A99B82;">Concept 01</span></div>
+      <h2 class="em" style="animation-delay:0.14s; font-family:var(--font-display); font-size:56px; letter-spacing:0.04em; line-height:1.08; margin:0 0 22px; color:#F6F1E7; text-transform:uppercase;">The Summer<br>Collection</h2>
+      <p class="em" style="animation-delay:0.22s; font-family:var(--font-display); font-style:italic; font-size:23px; line-height:1.4; color:#C8AC74; margin:0 0 26px;">A homepage that behaves like a summer you almost remember.</p>
+      <p class="em" style="animation-delay:0.3s; font-family:var(--font-body); font-size:17px; line-height:1.75; color:#A99B82; margin:0;">The page is an album of summer moments in the house's aesthetic — texture, light, salt on skin, beautiful objects. Each image sits inside its own frame, the frames suspended over one continuous surface: sand, raw cotton, sun-bleached linen. Nothing is staged. Everything feels found. Among the found moments, five frames are films — the house's mood reels, each finishing the line <em style="font-style:italic; color:#C8AC74;">when summer is…</em> (bare, and four still to come).</p>
+    </div>
+  </section>
+
+  <!-- 1.2 · CONCEPT 01 — SKETCH / HOW IT MOVES -->
+  <section data-label="01 · Moves" data-screen-label="01 Sketch" data-speaker-notes="The page responds to presence: the cursor stirs the surface, and most frames breathe in place. But five are films — reach one and it lifts out of the album, expands to fill the screen, and plays with sound. On mobile a quiet cue nudges you to turn the phone sideways; on desktop it simply plays large. The texture stays constant, so motion reads like weather across one surface." class="paper-slide" style="background:#EFE7D7; color:#211913; display:flex; align-items:center; padding:58px 64px; gap:50px; overflow:hidden;">
+    <div style="width:392px; flex:none;">
+      <div class="em" style="display:flex; align-items:center; gap:14px; margin-bottom:18px;"><span style="width:46px; height:4px; background:#B8945A; display:block;"></span><span style="font-family:var(--font-deco); font-size:12px; letter-spacing:0.32em; text-transform:uppercase; color:#9D8A6B;">Concept 01 · How it moves</span></div>
+      <h2 class="em" style="animation-delay:0.06s; font-family:var(--font-display); font-size:42px; letter-spacing:0.03em; line-height:1.12; margin:0 0 16px; color:#211913;">The page responds<br>to presence</h2>
+      <div style="display:flex; flex-direction:column; gap:16px; margin-top:24px;">
+        <div class="em" style="animation-delay:0.16s; display:flex; gap:14px;"><span style="width:7px; height:7px; margin-top:7px; background:#B8945A; flex:none;"></span><p style="font-family:var(--font-body); font-size:15.5px; line-height:1.62; color:#4F3C28; margin:0;">The cursor stirs the surface — a soft distortion of the background, or a house motif that trails the hand.</p></div>
+        <div class="em" style="animation-delay:0.26s; display:flex; gap:14px;"><span style="width:7px; height:7px; margin-top:7px; background:#B8945A; flex:none;"></span><p style="font-family:var(--font-body); font-size:15.5px; line-height:1.62; color:#4F3C28; margin:0;">Most frames breathe quietly in place. But five are films. Reach one and it lifts out of the album, expands to fill the screen, and plays — sound and all. On a phone, a quiet cue asks you to turn it sideways; on desktop it simply opens larger.</p></div>
+        <div class="em" style="animation-delay:0.36s; display:flex; gap:14px;"><span style="width:7px; height:7px; margin-top:7px; background:#B8945A; flex:none;"></span><p style="font-family:var(--font-body); font-size:15.5px; line-height:1.62; color:#4F3C28; margin:0;">The texture beneath stays constant — motion reads like weather moving across one surface, not effects switching on and off.</p></div>
+      </div>
+    </div>
+    <div style="flex:1; height:566px; display:flex;">
+      <div class="em" style="animation-delay:0.12s; position:relative; flex:1; align-self:stretch; border:1px solid #C9BFBA; border-radius:6px; overflow:hidden; background:#F1ECEA; box-shadow:0 26px 54px -30px rgba(33,25,19,0.5); display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; gap:7px; padding:10px 14px; border-bottom:1px solid #C9BFBA; background:#E9E2DF; flex:none;">
+          <span style="width:9px; height:9px; border-radius:50%; border:1px solid #B5AAA4;"></span><span style="width:9px; height:9px; border-radius:50%; border:1px solid #B5AAA4;"></span><span style="width:9px; height:9px; border-radius:50%; border:1px solid #B5AAA4;"></span>
+          <div style="margin-left:10px; flex:1; max-width:280px; height:18px; border-radius:4px; background:#F1ECEA; border:1px solid #D3C9C4; display:flex; align-items:center; padding:0 10px; font-family:'Space Mono',ui-monospace,monospace; font-size:11px; color:#9A918C;">souslepar­asol.com</div>
+        </div>
+        <div class="sketch-stamp" style="position:absolute; top:50px; right:14px; z-index:6; font-family:'Space Mono',ui-monospace,monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#9A918C; border:1px dashed #B5AAA4; padding:5px 9px; background:rgba(241,236,234,0.75);">Sketch · not final design</div>
+        <div style="position:relative; flex:1; overflow:hidden;">
+          <svg class="drift" viewBox="0 0 900 600" preserveAspectRatio="none" style="position:absolute; top:0; left:-14%; width:128%; height:100%; opacity:0.5;">
+            <g fill="none" stroke="#C3B9B4" stroke-width="1.4">
+              <path d="M-20,120 C150,80 320,180 500,130 C660,86 800,150 940,110"></path>
+              <path d="M-20,250 C170,210 300,300 520,250 C700,206 820,270 940,230"></path>
+              <path d="M-20,380 C140,340 340,430 520,378 C690,330 820,400 940,360"></path>
+              <path d="M-20,500 C160,470 320,540 520,494 C700,452 830,520 940,486"></path>
+            </g>
+          </svg>
+          <div style="position:absolute; left:24px; top:18px; font-family:'Space Mono',ui-monospace,monospace; font-size:11px; color:#9A918C;">// cursor stirs the surface</div>
+          <div style="position:absolute; left:24px; top:38px; font-family:'Space Mono',ui-monospace,monospace; font-size:11px; color:#9A7A45;">↻ turn your phone · mobile</div>
+          <div class="em" style="position:absolute; left:5%; top:18%; width:142px;"><div class="fa" style="height:104px; background:#E3DCD9; border:1px solid #CFC5C0;"></div></div>
+          <div class="em" style="animation-delay:0.2s; position:absolute; right:7%; top:11%; width:166px;"><div class="fb" style="height:116px; background:#E3DCD9; border:1.5px solid #B8945A;"></div><div style="font-family:'Space Mono',ui-monospace,monospace; font-size:10.5px; color:#7C6A4F; margin-top:6px;">frame → full-screen reel</div><div style="font-family:'Space Mono',ui-monospace,monospace; font-size:10px; color:#9A7A45; margin-top:3px;">⤢ expands to fill · 0:40 · sound on</div></div>
+          <div class="em" style="animation-delay:0.34s; position:absolute; left:36%; top:40%; width:116px;"><div class="fc" style="height:142px; background:#E3DCD9; border:1px solid #CFC5C0;"></div></div>
+          <div class="em" style="animation-delay:0.46s; position:absolute; left:8%; bottom:13%; width:150px;"><div class="fb pulse" style="height:106px; background:rgba(184,148,90,0.07); border:1.5px dashed #B8945A;"></div><div style="font-family:'Space Mono',ui-monospace,monospace; font-size:10.5px; color:#9A7A45; margin-top:6px;">// your photo</div></div>
+          <div class="em" style="animation-delay:0.4s; position:absolute; right:10%; bottom:16%; width:138px;"><div class="fc" style="height:96px; background:#E3DCD9; border:1px solid #CFC5C0;"></div></div>
+          <div class="em" style="animation-delay:0.5s; position:absolute; right:30%; bottom:11%; display:flex; align-items:center; gap:8px;"><span style="width:0; height:0; border-left:11px solid #7C6A4F; border-top:7px solid transparent; border-bottom:7px solid transparent;"></span><span style="font-family:'Space Mono',ui-monospace,monospace; font-size:11px; color:#7C6A4F;">play track</span></div>
+          <div style="position:absolute; left:52%; top:50%; width:18px; height:18px;"><span style="position:absolute; inset:0; border:1px solid #9A7A45;"></span><span class="ripple" style="position:absolute; left:-9px; top:-9px; width:36px; height:36px; border:1px solid #B8945A; border-radius:50%;"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.3 · CONCEPT 01 — INVITATION -->
+  <section data-label="01 · Invite" data-screen-label="01 Invitation" data-speaker-notes="One frame is left empty. Visitors place their own photograph for the chance to receive one of the first bottles; to save and share they leave an email — and, given the prize, a little more." class="paper-slide" style="background:#F6F1E7; color:#211913; display:flex; align-items:center; padding:0 92px; gap:72px; overflow:hidden;">
+    <div style="flex:1; max-width:560px;">
+      <div class="em" style="display:flex; align-items:center; gap:14px; margin-bottom:20px;"><span style="width:46px; height:4px; background:#B8945A; display:block;"></span><span style="font-family:var(--font-deco); font-size:12px; letter-spacing:0.32em; text-transform:uppercase; color:#9D8A6B;">Concept 01 · The invitation</span></div>
+      <h2 class="em" style="animation-delay:0.06s; font-family:var(--font-display); font-size:54px; letter-spacing:0.03em; line-height:1.06; margin:0 0 22px; color:#211913;">Add your<br>own summer.</h2>
+      <p class="em" style="animation-delay:0.16s; font-family:var(--font-body); font-size:17px; line-height:1.75; color:#4F3C28; margin:0; max-width:480px;">One frame is left empty. Visitors place their own photograph inside it for the chance to receive one of the first bottles. To save the frame and share the page, they leave an email — and, given the value of the prize, a little more.</p>
+      <div class="em" style="animation-delay:0.26s; margin-top:28px; border:1px solid var(--border-hairline); border-radius:4px; padding:12px 15px; max-width:470px; font-family:'Space Mono',ui-monospace,monospace; font-size:12px; line-height:1.6; color:#7C6A4F; background:rgba(246,241,231,0.6);"><span style="letter-spacing:0.18em; text-transform:uppercase; color:#9D8A6B; font-size:10px;">Note</span><br>Requires user sessions, a privacy policy, and full contest rules.<br><span style="color:#9A7A45;">Optional · a reel can also end with a "tell me when it's bottled" capture — a film leading to email, not only the empty-frame prize.</span></div>
+    </div>
+    <div class="em" style="animation-delay:0.2s; flex:none; position:relative;">
+      <div style="position:absolute; top:-14px; left:-14px; font-family:'Space Mono',ui-monospace,monospace; font-size:10.5px; color:#9A7A45; letter-spacing:0.04em;">// the empty frame</div>
+      <image-slot id="slp-summer-frame" shape="rect" radius="2" placeholder="Drop your summer here" style="display:block; width:312px; height:392px; border:1.5px dashed #B8945A; background:rgba(184,148,90,0.05);"></image-slot>
+      <div style="position:absolute; bottom:-30px; right:0; font-family:'Space Mono',ui-monospace,monospace; font-size:11px; color:#7C6A4F;">email + share →</div>
+    </div>
+  </section>
+
+  <!-- 2.1 · CONCEPT 02 — IDEA -->
+  <section data-label="02 · Idea" data-screen-label="02 Idea" data-speaker-notes="We don't talk about the perfume — we hand you the summer it came from. Five screens stack one on top of another, one per summer, each opening as a film; watch it through and the reel dissolves into the place it was shot and a short, secret guide to it." style="background:#211913; color:#F6F1E7; display:flex; align-items:center; padding:0 92px; gap:66px; overflow:hidden;">
+    <div class="em" style="font-family:var(--font-display); font-size:230px; line-height:0.78; color:#B0664A; flex:none; letter-spacing:0.02em;">02</div>
+    <div style="max-width:560px;">
+      <div class="em" style="animation-delay:0.08s; display:flex; align-items:center; gap:16px; margin-bottom:22px;"><span style="width:54px; height:4px; background:#9E4B36; display:block;"></span><span style="font-family:var(--font-deco); font-size:13px; letter-spacing:0.34em; text-transform:uppercase; color:#A99B82;">Concept 02</span></div>
+      <h2 class="em" style="animation-delay:0.14s; font-family:var(--font-display); font-size:56px; letter-spacing:0.04em; line-height:1.08; margin:0 0 22px; color:#F6F1E7; text-transform:uppercase;">The Disappearing<br>Guides</h2>
+      <p class="em" style="animation-delay:0.22s; font-family:var(--font-display); font-style:italic; font-size:23px; line-height:1.4; color:#CFA18A; margin:0 0 26px;">We don't talk about the perfume. We hand you the summer it came from.</p>
+      <p class="em" style="animation-delay:0.3s; font-family:var(--font-body); font-size:17px; line-height:1.75; color:#A99B82; margin:0;">Five films, five destinations. Each of the house’s five summers is a short film, paired one-to-one with the place it was shot — Pantelleria, Comporta, Portofino, Antiparos, Patmos. A screen opens as its film — <em style="font-style:italic; color:#CFA18A;">when summer is…</em> — and when you watch it through, the reel dissolves into that destination and a short, secret guide to it: the hotel with no sign, the restaurant you have to be told about, the beach no map marks.</p>
+    </div>
+  </section>
+
+  <!-- 2.4 · CONCEPT 02 — LIVE PROTOTYPE -->
+  <section data-label="02 · Prototype" data-screen-label="02 Prototype" data-speaker-notes="A working, high-fidelity prototype of Concept 02. The film plays — when summer is bare — then slides up to reveal the Comporta guide beneath: the real addresses, no stars, no signs. Seconds later the guide begins to fade; the only way to keep it is to send it to yourself. Use the arrows / keyboard to leave the slide; everything inside is live and clickable." style="background:#0f0b08; overflow:hidden; padding:0; position:relative;">
+    <iframe id="c02-proto" src="Homepage%20Concept%2002%20-%20Prototype.dc.html" title="Concept 02 · The Disappearing Guides — live prototype" style="width:100%; height:100%; border:0; display:block; background:#0f0b08;"></iframe>
+    <div style="position:absolute; left:20px; top:16px; z-index:5; pointer-events:none; display:flex; align-items:center; gap:10px; font-family:'Space Mono',ui-monospace,monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#F6F1E7; background:rgba(15,11,8,0.55); backdrop-filter:blur(4px); padding:6px 11px; border-radius:4px;"><span style="width:20px; height:3px; background:#9E4B36; display:block;"></span>Concept 02 · Live prototype</div>
+  </section>
+
+  <!-- 3.1 · CONCEPT 03 — IDEA -->
+  <section data-label="03 · Idea" data-screen-label="03 Idea" data-speaker-notes="The most product-forward concept of the set. The page opens almost blank. As you tap, sound and colour bloom under your finger and one line surfaces — when summer is… Words rise and fade: volcano, green, bare. Five of them are keys. Find the right word, and its film begins." style="background:#211913; color:#F6F1E7; display:flex; align-items:center; padding:0 92px; gap:66px; overflow:hidden;">
+    <div class="em" style="font-family:var(--font-display); font-size:230px; line-height:0.78; color:#6E8AA0; flex:none; letter-spacing:0.02em;">03</div>
+    <div style="max-width:560px;">
+      <div class="em" style="animation-delay:0.08s; display:flex; align-items:center; gap:16px; margin-bottom:22px;"><span style="width:54px; height:4px; background:#45616F; display:block;"></span><span style="font-family:var(--font-deco); font-size:13px; letter-spacing:0.34em; text-transform:uppercase; color:#A99B82;">Concept 03</span></div>
+      <h2 class="em" style="animation-delay:0.14s; font-family:var(--font-display); font-size:56px; letter-spacing:0.04em; line-height:1.08; margin:0 0 22px; color:#F6F1E7; text-transform:uppercase;">The Missing<br>Word</h2>
+      <p class="em" style="animation-delay:0.22s; font-family:var(--font-display); font-style:italic; font-size:23px; line-height:1.4; color:#9DB6C4; margin:0 0 26px;">The homepage is one unfinished sentence.</p>
+      <p class="em" style="animation-delay:0.3s; font-family:var(--font-body); font-size:17px; line-height:1.75; color:#A99B82; margin:0;">The most product-forward concept of the set. The page opens almost blank. As you tap, sound and colour bloom under your finger and one line surfaces — <em style="font-style:italic; color:#C8AC74;">when summer is…</em> Words rise and fade: volcano, green, bare. Five of them are keys. Find the right word, and its film begins.</p>
+    </div>
+  </section>
+
+  <!-- 3.2 · CONCEPT 03 — HOW IT OPENS -->
+  <section data-label="03 · Opens" data-screen-label="03 Sketch" data-speaker-notes="The site opens as a blank field — almost nothing. A quiet tip invites you to turn the phone sideways and touch the screen. Every tap answers: a soft note, a bloom of light. The line appears — when summer is… — and words surface one at a time, then fade. volcano. green. salt. bare. Tapping is the whole pleasure. Before you know it, you have slowed down." class="paper-slide" style="background:#EFE7D7; color:#211913; display:flex; align-items:center; padding:58px 64px; gap:50px; overflow:hidden;">
+    <div style="width:392px; flex:none;">
+      <div class="em" style="display:flex; align-items:center; gap:14px; margin-bottom:18px;"><span style="width:46px; height:4px; background:#45616F; display:block;"></span><span style="font-family:var(--font-deco); font-size:12px; letter-spacing:0.32em; text-transform:uppercase; color:#9D8A6B;">Concept 03 · How it opens</span></div>
+      <h2 class="em" style="animation-delay:0.06s; font-family:var(--font-display); font-size:42px; letter-spacing:0.03em; line-height:1.12; margin:0 0 16px; color:#211913;">Tap, and the<br>words rise</h2>
+      <p class="em" style="animation-delay:0.16s; font-family:var(--font-body); font-size:15.5px; line-height:1.7; color:#4F3C28; margin:0 0 14px;">The site opens as a blank field — almost nothing. A quiet tip invites you to turn the phone sideways and touch the screen. Every tap answers: a soft note, a bloom of light.</p>
+      <p class="em" style="animation-delay:0.26s; font-family:var(--font-body); font-size:15.5px; line-height:1.7; color:#4F3C28; margin:0;">The line appears — <em style="color:#34281B;">when summer is…</em> — and words surface one at a time, then fade. Tapping is the whole pleasure. Before you know it, you have slowed down.</p>
+    </div>
+    <div style="flex:1; height:566px; display:flex; align-items:center; justify-content:center;">
+      <div class="em" style="animation-delay:0.12s; position:relative; width:560px; height:300px; border-radius:34px; background:#2A2019; padding:12px; box-shadow:0 30px 60px -28px rgba(33,25,19,0.6);">
+        <div class="sketch-stamp" style="position:absolute; top:-14px; right:20px; z-index:8; font-family:'Space Mono',ui-monospace,monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#9A918C; border:1px dashed #B5AAA4; padding:5px 9px; background:rgba(239,231,215,0.92);">Sketch · not final design</div>
+        <div style="position:relative; width:100%; height:100%; border-radius:24px; background:#160F0A; overflow:hidden;">
+          <span style="position:absolute; top:50%; left:9px; transform:translateY(-50%); width:5px; height:5px; border-radius:50%; background:#3a2f26;"></span>
+          <div style="position:absolute; left:18px; top:14px; font-family:'Space Mono',ui-monospace,monospace; font-size:10px; color:#6b5f4f;">// turn your phone — tap the dark</div>
+          <div class="fade" style="position:absolute; left:50%; top:47%; transform:translate(-50%,-50%); font-family:var(--font-display); font-style:italic; font-size:26px; letter-spacing:0.02em; color:#C8AC74; white-space:nowrap;">when summer is…</div>
+          <span class="rise" style="animation-delay:0s; position:absolute; left:16%; top:64%; font-family:var(--font-display); font-size:22px; letter-spacing:0.04em; color:#C08A5A;">volcano</span>
+          <span class="rise" style="animation-delay:1.3s; position:absolute; left:70%; top:60%; font-family:var(--font-display); font-size:20px; letter-spacing:0.04em; color:#8B9A76;">green</span>
+          <span class="rise" style="animation-delay:2.6s; position:absolute; left:40%; top:70%; font-family:var(--font-display); font-size:24px; letter-spacing:0.04em; color:#CDD0CC;">salt</span>
+          <span class="rise" style="animation-delay:3.9s; position:absolute; left:80%; top:70%; font-family:var(--font-display); font-size:22px; letter-spacing:0.04em; color:#A6C0CE;">bare</span>
+          <span class="rise" style="animation-delay:5.2s; position:absolute; left:17%; top:30%; font-family:var(--font-display); font-size:20px; letter-spacing:0.04em; color:#C8AC74;">gold</span>
+          <div style="position:absolute; left:50%; top:74%; width:120px; height:120px; transform:translate(-50%,-50%);">
+            <span class="bloom" style="position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle, rgba(112,137,160,0.55), rgba(112,137,160,0) 70%);"></span>
+            <span class="ripple" style="position:absolute; left:50%; top:50%; margin:-26px 0 0 -26px; width:52px; height:52px; border:1px solid #6E8AA0; border-radius:50%;"></span>
+            <span class="pulse" style="position:absolute; left:50%; top:50%; width:12px; height:12px; margin:-6px 0 0 -6px; border:1.5px solid #9DB6C4; border-radius:50%;"></span>
+          </div>
+          <div style="position:absolute; left:18px; bottom:14px; font-family:'Space Mono',ui-monospace,monospace; font-size:10px; color:#6b5f4f;">// sound + colour bloom under your finger</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.3 · CONCEPT 03 — HIDDEN KEYS -->
+  <section data-label="03 · Keys" data-screen-label="03 Sketch" data-speaker-notes="Seconds in, a second line surfaces: find the right word — and disappear with us. Five of the drifting words are keys, one for each fragrance. bare — and four still to come. Land on a key and it stops fading. It holds, steadies, and the horizontal film opens full-screen. Forty seconds of sea and sound. A small mystery, solved by hand." class="paper-slide" style="background:#EFE7D7; color:#211913; display:flex; align-items:center; padding:58px 64px; gap:50px; overflow:hidden;">
+    <div style="width:392px; flex:none;">
+      <div class="em" style="display:flex; align-items:center; gap:14px; margin-bottom:18px;"><span style="width:46px; height:4px; background:#45616F; display:block;"></span><span style="font-family:var(--font-deco); font-size:12px; letter-spacing:0.32em; text-transform:uppercase; color:#9D8A6B;">Concept 03 · The hidden keys</span></div>
+      <h2 class="em" style="animation-delay:0.06s; font-family:var(--font-display); font-size:42px; letter-spacing:0.03em; line-height:1.12; margin:0 0 16px; color:#211913;">Find the word,<br>and it plays</h2>
+      <p class="em" style="animation-delay:0.16s; font-family:var(--font-body); font-size:15.5px; line-height:1.7; color:#4F3C28; margin:0 0 14px;">Seconds in, a second line surfaces: <em style="color:#34281B;">find the right word — and disappear with us.</em> Five of the drifting words are keys, one for each fragrance. Land on a key and it stops fading.</p>
+      <p class="em" style="animation-delay:0.26s; font-family:var(--font-body); font-size:15.5px; line-height:1.7; color:#4F3C28; margin:0;">It holds, steadies, and the horizontal film opens full-screen. Forty seconds of sea and sound. A small mystery, solved by hand.</p>
+    </div>
+    <div style="flex:1; height:566px; display:flex; align-items:center; justify-content:center;">
+      <div class="em" style="animation-delay:0.12s; position:relative; width:560px; height:300px; border-radius:34px; background:#2A2019; padding:12px; box-shadow:0 30px 60px -28px rgba(33,25,19,0.6);">
+        <div class="sketch-stamp" style="position:absolute; top:-14px; right:20px; z-index:8; font-family:'Space Mono',ui-monospace,monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#9A918C; border:1px dashed #B5AAA4; padding:5px 9px; background:rgba(239,231,215,0.92);">Sketch · not final design</div>
+        <div style="position:relative; width:100%; height:100%; border-radius:24px; background:#160F0A; overflow:hidden;">
+          <div class="filmopen" style="position:absolute; inset:0;">
+            <img src="assets/invite-bg.jpg" alt="Sea film" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+            <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(22,15,10,0.12), rgba(22,15,10,0.6));"></div>
+            <span class="scan" style="position:absolute; top:0; width:30%; height:100%; background:linear-gradient(90deg, transparent, rgba(246,241,231,0.14), transparent);"></span>
+            <div style="position:absolute; left:16px; right:16px; bottom:14px; display:flex; align-items:center; gap:12px;">
+              <span style="width:0; height:0; border-left:12px solid #F6F1E7; border-top:8px solid transparent; border-bottom:8px solid transparent;"></span>
+              <div style="flex:1; height:3px; background:rgba(246,241,231,0.3); border-radius:2px; overflow:hidden;"><div style="width:38%; height:100%; background:#F6F1E7;"></div></div>
+              <span style="font-family:'Space Mono',ui-monospace,monospace; font-size:11px; color:#F6F1E7;">0:40</span>
+              <span style="font-family:'Space Mono',ui-monospace,monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:#C8AC74; border:1px solid rgba(200,172,116,0.6); border-radius:3px; padding:2px 6px;">sound on</span>
+            </div>
+          </div>
+          <div class="hold" style="position:absolute; left:16px; top:14px; z-index:5; font-family:var(--font-display); font-size:18px; letter-spacing:0.04em; color:#A6C0CE; border:1px solid rgba(166,192,206,0.55); border-radius:3px; padding:3px 11px;">bare ✓</div>
+          <div style="position:absolute; right:16px; top:14px; z-index:5; display:flex; align-items:center; gap:8px; font-family:'Space Mono',ui-monospace,monospace; font-size:10px; color:#e7ddce; text-shadow:0 1px 4px rgba(0,0,0,0.5);"><span style="color:#A6C0CE;">bare</span><span style="opacity:0.5;">·</span><span style="letter-spacing:0.3em; color:#c7b095;">◦◦◦◦</span><span style="opacity:0.85;">four to come</span></div>
+          <div style="position:absolute; left:16px; bottom:46px; z-index:5; font-family:'Space Mono',ui-monospace,monospace; font-size:10px; color:#dce6ea; text-shadow:0 1px 4px rgba(0,0,0,0.55);">// land on a key → it holds, then plays</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.4 · CONCEPT 03 — INVITATION -->
+  <section data-label="03 · Invite" data-screen-label="03 Invitation" data-speaker-notes="The film fades, and the fragrance is named. Scroll, and the summer you just watched becomes a bottle — Comporta · Le Bleu Sacré — its three notes, the place it came from. One quiet line asks for an email: to be first when the collection appears. Then — play again? Four more summers, still hidden." class="paper-slide" style="background:#F6F1E7; color:#211913; display:flex; align-items:center; padding:0 92px; gap:72px; overflow:hidden;">
+    <div style="flex:1; max-width:560px;">
+      <div class="em" style="display:flex; align-items:center; gap:14px; margin-bottom:20px;"><span style="width:46px; height:4px; background:#45616F; display:block;"></span><span style="font-family:var(--font-deco); font-size:12px; letter-spacing:0.32em; text-transform:uppercase; color:#9D8A6B;">Concept 03 · The invitation</span></div>
+      <h2 class="em" style="animation-delay:0.06s; font-family:var(--font-display); font-size:54px; letter-spacing:0.03em; line-height:1.06; margin:0 0 22px; color:#211913;">When the<br>film ends.</h2>
+      <p class="em" style="animation-delay:0.16s; font-family:var(--font-body); font-size:17px; line-height:1.75; color:#4F3C28; margin:0 0 24px; max-width:480px;">The film fades, and the fragrance is named. Scroll, and the summer you just watched becomes a bottle — its three notes, the place it came from. One quiet line asks for an email: to be first when the collection appears.</p>
+      <div class="em" style="animation-delay:0.24s; display:flex; align-items:center; gap:0; max-width:440px;"><span style="font-family:var(--font-display); font-style:italic; font-size:17px; color:#45616F; flex:none; margin-right:16px;">Be told when it can be worn</span><span style="flex:1; height:38px; border:1px solid var(--border-strong); display:flex; align-items:center; padding:0 12px; font-family:'Space Mono',ui-monospace,monospace; font-size:12px; color:#9D8A6B;">your email</span><span style="width:38px; height:38px; background:#211913; display:flex; align-items:center; justify-content:center; color:#F6F1E7;">→</span></div>
+      <div class="em" style="animation-delay:0.32s; margin-top:24px; font-family:'Space Mono',ui-monospace,monospace; font-size:12px; color:#7C6A4F;">then — <span style="color:#45616F; text-decoration:underline; text-underline-offset:3px;">play again?</span> &nbsp; four more summers, still hidden</div>
+    </div>
+    <div class="em" style="animation-delay:0.2s; flex:none; width:330px; background:#FBF8F2; border:1px solid #CFC5C0; border-radius:8px; box-shadow:0 40px 80px -34px rgba(33,25,19,0.6); overflow:hidden;">
+      <div style="position:relative; height:300px; background:#211913; overflow:hidden;">
+        <img src="assets/bottle-goldenhour.png" alt="Le Bleu Sacré flacon" style="width:100%; height:100%; object-fit:cover;">
+        <div style="position:absolute; left:16px; top:14px; font-family:var(--font-display); font-style:italic; font-size:15px; color:#C8AC74;">when summer is bare</div>
+      </div>
+      <div style="padding:20px 22px 24px;">
+        <div style="font-family:var(--font-display); font-size:24px; letter-spacing:0.06em; text-transform:uppercase; color:#211913;">Comporta</div>
+        <div style="font-family:var(--font-deco); font-size:11px; letter-spacing:0.26em; text-transform:uppercase; color:#45616F; margin-top:6px;">Le Bleu Sacré</div>
+        <div style="height:1px; background:var(--border-hairline); margin:14px 0;"></div>
+        <div style="font-family:var(--font-body); font-size:13px; letter-spacing:0.02em; color:#4F3C28;">Silence · Horizon · Breath</div>
+        <div style="font-family:var(--font-display); font-style:italic; font-size:17px; color:#7C6A4F; margin-top:12px;">the sea, bottled.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3.5 · CONCEPT 03 — WHY IT FITS -->
+  <section data-label="03 · Why" data-screen-label="03 Why it fits" data-speaker-notes="This turns the house's founding idea — the art of disappearance — into the way the site behaves. Meaning is never handed over; it is found, one word at a time. The fragrance is never explained, only unlocked. And the email arrives naturally: to keep the summer you uncovered, and to be told when it can be worn." style="background:#211913; color:#F6F1E7; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 90px; text-align:center; overflow:hidden;">
+    <img class="em" src="assets/seal.png" alt="Parasol seal" style="width:84px; height:auto; margin-bottom:34px; mix-blend-mode:screen; opacity:0.9;">
+    <div class="em" style="animation-delay:0.08s; display:flex; align-items:center; gap:14px; margin-bottom:24px;"><span style="width:46px; height:4px; background:#45616F; display:block;"></span><span style="font-family:var(--font-deco); font-size:12px; letter-spacing:0.32em; text-transform:uppercase; color:#A99B82;">Concept 03 · Why it fits</span><span style="width:46px; height:4px; background:#45616F; display:block;"></span></div>
+    <h2 class="em" style="animation-delay:0.14s; font-family:var(--font-display); font-size:56px; letter-spacing:0.03em; line-height:1.08; margin:0 0 24px; color:#F6F1E7; text-transform:uppercase;">The word is the door</h2>
+    <p class="em" style="animation-delay:0.24s; font-family:var(--font-body); font-size:17.5px; line-height:1.78; color:#A99B82; margin:0; max-width:680px;">This turns the house's founding idea — the art of disappearance — into the way the site behaves. Meaning is never handed over; it is found, one word at a time. The fragrance is never explained, only unlocked. And the email arrives naturally: to keep the summer you uncovered, and to be told when it can be worn.</p>
+    <div class="em" style="animation-delay:0.34s; font-family:var(--font-display); font-style:italic; font-size:22px; letter-spacing:0.02em; color:#C8AC74; margin-top:40px;">Say the word.</div>
+  </section>
+
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Presentation&quot;},&quot;sketchStamp&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Presentation&quot;},&quot;paperTexture&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Presentation&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    // When exported as a standalone file, the prototype is inlined as a blob
+    // resource; point the iframe at it instead of the sibling .dc.html.
+    const f0 = document.getElementById('c02-proto');
+    if (f0 && window.__resources && window.__resources.c02proto) {
+      f0.src = window.__resources.c02proto;
+    }
+    // Restart the embedded Concept 02 prototype each time its slide becomes active.
+    this._protoWasActive = false;
+    this._protoTimer = setInterval(() => {
+      const f = document.getElementById('c02-proto');
+      if (!f) return;
+      if (window.__resources && window.__resources.c02proto && f.src !== window.__resources.c02proto) {
+        f.src = window.__resources.c02proto;
+      }
+      const slide = f.closest('[data-deck-slide]') || f.parentElement;
+      const active = !!(slide && slide.hasAttribute('data-deck-active'));
+      if (active && !this._protoWasActive) {
+        try { f.src = f.src; } catch (e) {}
+      }
+      this._protoWasActive = active;
+    }, 300);
+  }
+  componentWillUnmount() { clearInterval(this._protoTimer); }
+  renderVals() {
+    const p = this.props || {};
+    const motion = p.motion ?? true;
+    const stamp = p.sketchStamp ?? true;
+    const tex = p.paperTexture ?? false;
+    const rootClass = [motion ? '' : 'no-motion', stamp ? '' : 'no-stamp', tex ? 'paper-tex' : ''].filter(Boolean).join(' ');
+    return { rootClass };
+  }
+}
+</script>
+</body>
+</html>
