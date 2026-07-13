@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sous Le Parasol — when summer is bare</title>
+<meta name="theme-color" content="#EDE6D9">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Josefin+Sans:wght@300;400;500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  /* ---- tokens (BARE summer) ---- */
+  :root{
+    --paper:#EDE6D9; --card:#F6F1E7; --ink:#211913;
+    --bare-ink:#3f4c54; --bare-spine:#45616F; --muted:#9D8A6B; --accent:#9E4B36;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#cfc7b6;-webkit-font-smoothing:antialiased;}
+  body{font-family:'Josefin Sans',Helvetica,Arial,sans-serif;color:var(--ink);}
+
+  /* the pop-up "phone" frame — vertical, scrollable */
+  .phone{
+    position:relative;max-width:440px;margin:0 auto;min-height:100vh;min-height:100svh;
+    background:var(--paper);overflow-x:hidden;
+    box-shadow:0 0 80px -20px rgba(0,0,0,.45);
+  }
+
+  /* giant debossed summer word, drifting behind everything */
+  .deboss{
+    position:absolute;top:220px;left:-46px;z-index:0;pointer-events:none;user-select:none;
+    font-family:'Marcellus',serif;font-size:340px;line-height:.8;letter-spacing:.01em;
+    text-transform:uppercase;white-space:nowrap;color:#E7DFD0;
+    text-shadow:-2px -2px 1px rgba(255,255,255,.85),2px 3px 3px rgba(120,95,60,.28);
+    animation:drift 90s ease-in-out infinite;
+  }
+
+  /* ---- top bar ---- */
+  .bar{
+    position:sticky;top:0;z-index:60;padding:18px 58px 12px 22px;
+    background:linear-gradient(var(--paper) 72%,rgba(237,230,217,0));
+  }
+  .mark{font-family:'Marcellus',serif;font-size:16px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink);}
+  .mark .le{font-size:.62em;letter-spacing:.16em;vertical-align:.12em;margin:0 .12em;}
+  .sub{font-size:9.5px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted);margin-top:5px;}
+  .whenrow{display:flex;align-items:baseline;justify-content:center;gap:8px;margin-top:12px;}
+  .whenrow .lead{font-family:'Marcellus',serif;font-style:italic;font-size:13px;color:var(--muted);}
+  .whenrow .kw{font-size:14px;letter-spacing:.05em;color:var(--accent);font-weight:500;border-bottom:1.5px solid var(--accent);padding-bottom:2px;}
+  .close{position:absolute;top:14px;right:16px;z-index:70;width:30px;height:30px;border-radius:50%;
+    border:1px solid rgba(33,25,19,.18);background:rgba(246,241,231,.7);color:var(--muted);
+    font-size:16px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+
+  /* ---- story ---- */
+  .story{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;
+    gap:64px;padding:26px 24px 46px;}
+  .block{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .visual-wrap{position:relative;}           /* holds the floating motion */
+  .float{position:relative;}
+  .eyebrow{margin-top:22px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--muted);}
+  .title{margin-top:8px;font-family:'Marcellus',serif;font-size:23px;color:var(--ink);}
+  .caption{margin-top:12px;max-width:34ch;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--bare-ink);}
+  .credit{margin-top:12px;font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.10em;color:var(--muted);}
+
+  /* media tile */
+  .media{position:relative;overflow:hidden;border-radius:3px;
+    box-shadow:0 20px 46px -30px rgba(35,28,20,.6),0 3px 10px -6px rgba(35,28,20,.35);}
+  .media img{display:block;width:100%;height:100%;object-fit:cover;}
+
+  /* texture tile */
+  .texture{position:relative;width:230px;height:300px;overflow:hidden;border-radius:3px;cursor:crosshair;
+    box-shadow:0 20px 46px -30px rgba(35,28,20,.6),0 3px 10px -6px rgba(35,28,20,.35);touch-action:none;}
+  .linen{position:absolute;inset:0;
+    background:repeating-linear-gradient(0deg,#e8ddc9 0px,#e2d6bd 1px,#e8ddc9 2px,#eadfcb 3px),
+              repeating-linear-gradient(90deg,rgba(150,125,90,.10) 0px,rgba(150,125,90,0) 1px,rgba(150,125,90,.08) 2px);
+    animation:breathe 9s ease-in-out infinite;}
+  .tx-bloom{position:absolute;width:170px;height:170px;left:-999px;top:-999px;transform:translate(-50%,-50%);
+    border-radius:50%;background:radial-gradient(circle,rgba(214,168,90,.55),rgba(214,168,90,0) 70%);
+    mix-blend-mode:multiply;opacity:0;transition:opacity 2.6s ease;pointer-events:none;}
+
+  /* sound blob */
+  .sound{display:flex;flex-direction:column;align-items:center;}
+  .blob{width:150px;height:150px;border-radius:50% 48% 52% 46%;cursor:pointer;
+    background:radial-gradient(circle at 38% 32%,#e9dcc2,#cdb488 78%);
+    box-shadow:inset 0 6px 18px rgba(255,255,255,.55),0 18px 40px -24px rgba(35,28,20,.6);
+    animation:blobP 6s ease-in-out infinite;}
+  .blob.playing{animation:blobPlay 1.6s ease-in-out infinite;}
+  .soundcue{margin-top:16px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);transition:color .3s ease;}
+  .blob.playing + .soundcue{color:var(--accent);}
+
+  /* invite (email) */
+  .invite{width:100%;max-width:320px;padding:22px 22px 20px;background:var(--card);
+    border:1px solid rgba(33,25,19,.10);border-radius:3px;
+    box-shadow:0 20px 46px -30px rgba(35,28,20,.5);text-align:left;}
+  .invite h2{margin:0 0 14px;font-family:'Marcellus',serif;font-weight:400;font-size:21px;
+    letter-spacing:.02em;color:#34281B;line-height:1.25;}
+  .invite form{display:flex;flex-direction:column;border-bottom:1px solid var(--accent);padding-bottom:6px;}
+  .invite input{border:0;outline:none;background:transparent;font-family:'Space Mono',monospace;
+    font-size:13px;letter-spacing:.02em;color:#34281B;padding:2px 0;width:100%;}
+  .invite input::placeholder{color:#9a8a72;}
+  .invite .go{align-self:flex-end;margin-top:12px;background:none;border:0;cursor:pointer;
+    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);}
+  .invite .sent{font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.02em;color:#6B5238;line-height:1.6;}
+  .invite .fine{margin-top:12px;font-size:11px;font-weight:300;color:var(--muted);line-height:1.5;}
+
+  .foot{position:relative;z-index:10;text-align:center;padding:0 24px 40px;
+    font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#b3a488;}
+
+  /* ---- motion (identical to the canvas) ---- */
+  @keyframes floatA{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(7px,-11px) rotate(.45deg)}}
+  @keyframes floatB{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-8px,8px) rotate(-.5deg)}}
+  @keyframes floatC{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(6px,9px) rotate(.35deg)}}
+  @keyframes floatD{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-6px,-7px) rotate(-.3deg)}}
+  @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-16px,10px)}}
+  @keyframes breathe{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.015);filter:brightness(1.03)}}
+  @keyframes blobP{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes blobPlay{0%,100%{transform:scale(1.16)}50%{transform:scale(1.26)}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="phone">
+  <button class="close" aria-label="Close" onclick="history.length>1?history.back():window.close()">&times;</button>
+
+  <div class="bar">
+    <div class="mark">Sous <span class="le">le</span> Parasol</div>
+    <div class="sub">Eau de Parfum · Five summers</div>
+    <div class="whenrow">
+      <span class="lead">when summer is —</span>
+      <span class="kw">bare</span>
+    </div>
+  </div>
+
+  <div class="deboss">NU</div>
+
+  <div class="story">
+
+    <!-- 1 · TEXTURE — Sun-dried linen (interactive) -->
+    <div class="block">
+      <div class="visual-wrap">
+        <div class="float" style="animation:11s ease-in-out 0s infinite floatA;">
+          <div class="texture" id="texture">
+            <div class="linen"></div>
+            <div class="tx-bloom" id="txBloom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="eyebrow">Texture</div>
+      <div class="title">Sun-dried linen</div>
+      <div class="caption">Not a photograph — a surface you can disturb. Drag a finger across it and the warmth blooms where you touch, then slowly fades, leaving a trace after you&rsquo;ve gone.</div>
+      <div class="credit">Interactive · built, not shot</div>
+    </div>
+
+    <!-- 2 · ARTWORK — White on white -->
+    <div class="block">
+      <div class="visual-wrap">
+        <div class="float" style="animation:12.7s ease-in-out .7s infinite floatB;">
+          <div class="media" style="width:205px;height:205px;">
+            <img src="../assets/bare-malevich.jpg" alt="A pale square on a pale ground">
+          </div>
+        </div>
+      </div>
+      <div class="eyebrow">Artwork</div>
+      <div class="title">White on white</div>
+      <div class="caption">A pale square on a pale ground, tilted a degree, visible only because the two whites are not quite the same white.</div>
+      <div class="credit">Kazimir Malevich · public domain</div>
+    </div>
+
+    <!-- 3 · SOUND — A fragment, overheard (tap to play) -->
+    <div class="block">
+      <div class="visual-wrap">
+        <div class="float" style="animation:14.4s ease-in-out 1.4s infinite floatC;">
+          <div class="sound">
+            <div class="blob" id="blob" role="button" tabindex="0" aria-label="Play the sound"></div>
+          </div>
+        </div>
+      </div>
+      <div class="soundcue" id="soundcue">turn on the sound</div>
+      <div class="eyebrow">Sound</div>
+      <div class="title">A fragment, overheard</div>
+      <div class="caption">French, spoken low and close — two people mid-conversation, overlapping, faintly amused. Room tone, a fan, a car outside. It ends without resolving.</div>
+      <div class="credit">Sound · to be recorded by the house</div>
+    </div>
+
+    <!-- 4 · INVITE — Make the summer last -->
+    <div class="block">
+      <div class="visual-wrap">
+        <div class="float" style="animation:13.1s ease-in-out .3s infinite floatD;">
+          <div class="invite">
+            <h2>Make the summer last.</h2>
+            <form id="inviteForm">
+              <input id="email" type="email" required placeholder="your email" autocomplete="email">
+              <button class="go" type="submit">send</button>
+            </form>
+            <div class="fine">Inspiration for a longer summer — images, films, fragments in the language of the house. Not a newsletter.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">remember the light</div>
+</div>
+
+<script>
+/* ---------- texture: warmth bloom follows the finger ---------- */
+(function(){
+  var host = document.getElementById('texture');
+  var bloom = document.getElementById('txBloom');
+  if(!host||!bloom) return;
+  var fade;
+  function move(clientX, clientY){
+    var r = host.getBoundingClientRect();
+    bloom.style.transition = 'opacity .15s ease';
+    bloom.style.left = (clientX - r.left) + 'px';
+    bloom.style.top  = (clientY - r.top) + 'px';
+    bloom.style.opacity = '1';
+    if(fade) clearTimeout(fade);
+    fade = setTimeout(function(){ bloom.style.transition='opacity 2.6s ease'; bloom.style.opacity='0'; }, 90);
+  }
+  host.addEventListener('pointermove', function(e){ move(e.clientX, e.clientY); });
+  host.addEventListener('pointerleave', function(){ bloom.style.transition='opacity 2.6s ease'; bloom.style.opacity='0'; });
+  host.addEventListener('touchmove', function(e){
+    var t = e.touches[0]; if(!t) return; e.preventDefault(); move(t.clientX, t.clientY);
+  }, {passive:false});
+})();
+
+/* ---------- sound: synthesised room-tone murmur, tap to toggle ----------
+   Stands in for the French dialogue the house will record: filtered noise
+   (breath/room) under two slow, detuned voice-like tones that swell and fade
+   like overlapping speech. Same synth as the canvas prototype. */
+(function(){
+  var blob = document.getElementById('blob');
+  var cue = document.getElementById('soundcue');
+  if(!blob) return;
+  var on=false, actx=null, audio=null, alive=false, swellT=[];
+
+  function start(){
+    try{
+      var AC = window.AudioContext || window.webkitAudioContext; if(!AC) return;
+      var ctx = actx || (actx = new AC());
+      if(ctx.state === 'suspended') ctx.resume();
+      var now = ctx.currentTime;
+      var master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+      master.gain.linearRampToValueAtTime(0.16, now + 0.8);
+
+      // room tone: brown-ish noise, heavily low-passed
+      var dur=2, buf=ctx.createBuffer(1, ctx.sampleRate*dur, ctx.sampleRate);
+      var dd=buf.getChannelData(0), last=0;
+      for(var i=0;i<dd.length;i++){ var w=(Math.random()*2-1); last=(last+0.02*w)/1.02; dd[i]=last*3.2; }
+      var noise=ctx.createBufferSource(); noise.buffer=buf; noise.loop=true;
+      var nf=ctx.createBiquadFilter(); nf.type='lowpass'; nf.frequency.value=520; nf.Q.value=0.6;
+      var ng=ctx.createGain(); ng.gain.value=0.5;
+      noise.connect(nf); nf.connect(ng); ng.connect(master); noise.start();
+
+      var voices=[];
+      var mk=function(freq, pan){
+        var o=ctx.createOscillator(); o.type='sawtooth'; o.frequency.value=freq;
+        var vf=ctx.createBiquadFilter(); vf.type='lowpass'; vf.frequency.value=680; vf.Q.value=4;
+        var g=ctx.createGain(); g.gain.value=0.0;
+        var p=ctx.createStereoPanner?ctx.createStereoPanner():null; if(p)p.pan.value=pan;
+        o.connect(vf); vf.connect(g); g.connect(p||master); if(p)p.connect(master); o.start();
+        var swell=function(){ if(!alive) return; var t=ctx.currentTime; var up=0.4+Math.random()*0.7;
+          g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value,t);
+          g.gain.linearRampToValueAtTime(0.05+Math.random()*0.06, t+up);
+          var hold=0.25+Math.random()*0.5; g.gain.linearRampToValueAtTime(0.0, t+up+hold);
+          vf.frequency.setValueAtTime(520+Math.random()*400, t);
+          swellT.push(setTimeout(swell, (up+hold+Math.random()*0.5)*1000)); };
+        swell(); voices.push({o:o});
+      };
+      alive=true; swellT=[];
+      mk(150,-0.35); mk(190,0.4);
+      audio={ctx:ctx, master:master, noise:noise, voices:voices};
+    }catch(e){}
+  }
+  function stop(){
+    alive=false; swellT.forEach(clearTimeout); swellT=[];
+    var a=audio; if(!a) return; var ctx=a.ctx, t=ctx.currentTime;
+    try{ a.master.gain.cancelScheduledValues(t); a.master.gain.setValueAtTime(a.master.gain.value,t);
+      a.master.gain.linearRampToValueAtTime(0, t+0.6); }catch(e){}
+    setTimeout(function(){ try{ a.noise.stop(); a.voices.forEach(function(v){v.o.stop();}); }catch(e){} audio=null; }, 700);
+  }
+  function toggle(){
+    on=!on;
+    blob.classList.toggle('playing', on);
+    if(cue) cue.textContent = on ? 'sound on — tap to stop' : 'turn on the sound';
+    if(on) start(); else stop();
+  }
+  blob.addEventListener('click', toggle);
+  blob.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); }});
+})();
+
+/* ---------- invite: collect the email (prototype — no backend) ---------- */
+(function(){
+  var form = document.getElementById('inviteForm');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.parentNode.querySelector('h2').textContent = 'Sent.';
+    form.outerHTML = '<div class="sent">Look for it<br>when the light changes.</div>';
+  });
+})();
+</script>
+</body>
+</html>
