@@ -1,0 +1,74 @@
+/* ============================================================
+   COLORS — Sous Le Parasol
+   "Quiet luxury" — sand, paper, amber glass, warm shadow.
+   Warm-neutral spine + per-fragrance "colour spines" (muted).
+   ============================================================ */
+
+:root {
+  /* ---- Sand / paper neutrals (the ground & the canvas) ---- */
+  --sand-50:  #F6F1E7;   /* matte warm white — labels, lightest paper */
+  --sand-100: #EFE7D7;   /* page ground — pressed paper / canvas */
+  --sand-200: #E5D9C3;   /* sandstone, raised card on sand */
+  --sand-300: #D6C5A8;   /* deeper sand */
+  --sand-400: #BEA984;   /* taupe sand */
+  --sand-500: #9D8A6B;   /* mid taupe — muted text on light */
+  --sand-600: #7C6A4F;   /* dark taupe */
+
+  /* ---- Umber / espresso (wood cap, brown foil, warm ink) ---- */
+  --umber-600: #6B5238;  /* brown foil text */
+  --umber-700: #4F3C28;  /* deep wood */
+  --umber-800: #34281B;  /* espresso */
+  --ink-900:   #211913;  /* warm near-black — primary text */
+  --ink-950:   #160F0A;  /* deepest shadow tone */
+
+  /* ---- Amber / champagne / gold (the glass, liquid, golden hour) ---- */
+  --champagne: #D9C7A6;  /* champagne-tinted flacon */
+  --amber-400: #C68A3E;  /* honey amber */
+  --amber-500: #A8631F;  /* amber glass */
+  --amber-600: #8A4B1E;  /* deep amber */
+  --gold-300:  #C8AC74;  /* light gilt */
+  --gold-400:  #B8945A;  /* gold foil / cap */
+  --gold-500:  #9A7A45;  /* struck gold */
+
+  /* ---- The five "Summer States" — colour spines (muted) ---- */
+  --vert:   #5E6B4E;     /* Vert Cru / Le Vert Volcanique — force, mineral */
+  --vert-tint:  #E4E5DA;
+  --bleu:   #45616F;     /* Bleu Nu / Le Bleu Sacré — silence, horizon */
+  --bleu-tint:  #DEE4E6;
+  --blanc:  #C9CCC8;     /* Blanc Froissé — skin, fabric, intimacy */
+  --blanc-tint: #ECEDEA;
+  --rouge:  #9E4B36;     /* Rouge Glacé / Le Rouge Enneigé — radiance, tension */
+  --rouge-tint: #EEDDD6;
+  --or:     #B8945A;     /* L'Or Graphique — geometry, rhythm, control */
+  --or-tint:    #EFE6D2;
+
+  /* ---- Functional accents (kept quiet, never neon) ---- */
+  --positive: #5E6B4E;
+  --critical: #9E4B36;
+  --info:     #45616F;
+
+  /* ============ SEMANTIC ALIASES ============ */
+  --surface-page:    var(--sand-100);   /* the brand ground */
+  --surface-canvas:  var(--sand-200);   /* sandstone / textured panel */
+  --surface-card:    var(--sand-50);    /* warm-white paper card */
+  --surface-raised:  #FBF8F1;           /* lifted into the light */
+  --surface-inverse: var(--ink-900);    /* shadow / dark mode panel */
+
+  --text-primary:   var(--ink-900);
+  --text-secondary: var(--umber-600);
+  --text-muted:     var(--sand-500);
+  --text-on-dark:   var(--sand-100);
+  --text-on-dark-muted: #A99B82;
+
+  --accent:         var(--gold-400);     /* default house accent */
+  --accent-strong:  var(--gold-500);
+  --accent-quiet:   var(--or-tint);
+
+  --border-hairline: rgba(33,25,19,0.12);   /* fine engraved rule */
+  --border-soft:     rgba(33,25,19,0.08);
+  --border-strong:   rgba(33,25,19,0.28);
+  --border-on-dark:  rgba(246,241,231,0.18);
+
+  /* selection */
+  --selection-bg: rgba(184,148,90,0.30);
+}

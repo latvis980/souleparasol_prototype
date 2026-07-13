@@ -1,0 +1,27 @@
+/* ============================================================
+   ELEVATION & MOTION — Sous Le Parasol
+   "The Light Axis": light reveals, shadow protects. Shadows are
+   WARM-tinted, soft, and long/directional — never grey, never harsh.
+   Motion is slow and deliberate (the art of disappearing).
+   ============================================================ */
+
+:root {
+  /* ---- Warm shadow system (umber-tinted, low opacity) ---- */
+  --shadow-xs:  0 1px 2px rgba(33,25,19,0.06);
+  --shadow-sm:  0 2px 8px rgba(33,25,19,0.07);
+  --shadow-md:  0 10px 28px -8px rgba(33,25,19,0.14);
+  --shadow-lg:  0 26px 60px -18px rgba(33,25,19,0.22);
+  /* directional "golden hour" cast — long & warm */
+  --shadow-cast: 24px 30px 60px -22px rgba(52,40,27,0.32);
+  /* inset hollow (the flacon sits in a quiet hollow) */
+  --shadow-hollow: inset 0 2px 6px rgba(33,25,19,0.10);
+
+  /* ---- Motion ---- */
+  /* settle, no bounce / slow reveal */
+  --ease-quiet:  cubic-bezier(0.22, 0.61, 0.36, 1);   /* @kind other */
+  --ease-emerge: cubic-bezier(0.16, 1, 0.3, 1);        /* @kind other */
+  --dur-fast:   160ms;   /* @kind other */
+  --dur-base:   280ms;   /* @kind other */
+  --dur-slow:   520ms;   /* @kind other */
+  --dur-reveal: 800ms;   /* @kind other */
+}

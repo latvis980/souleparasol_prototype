@@ -1,0 +1,45 @@
+/* ============================================================
+   TYPOGRAPHY — Sous Le Parasol
+   Display: Marcellus (Ergon substitute) — engraved Art-Deco caps.
+   Deco:    Josefin Sans — ruled lockups, eyebrows, labels.
+   Body/UI: Helvetica (brand-spec) with system fallback.
+   The brand sets display almost always in CAPS with open tracking.
+   ============================================================ */
+
+:root {
+  /* ---- Families ---- */
+  --font-display: "Marcellus", "Times New Roman", serif;
+  --font-deco:    "Josefin Sans", "Century Gothic", system-ui, sans-serif;
+  --font-body:    "Helvetica Neue", "Helvetica", Arial, sans-serif;
+
+  /* ---- Type scale (rem; 1rem = 16px) ---- */
+  --fs-display-xl: 5.0rem;   /* 80px — hero fragrance name */
+  --fs-display-lg: 3.5rem;   /* 56px */
+  --fs-display-md: 2.5rem;   /* 40px */
+  --fs-title:      2.0rem;   /* 32px */
+  --fs-heading:    1.5rem;   /* 24px */
+  --fs-subhead:    1.25rem;  /* 20px */
+  --fs-body-lg:    1.0625rem;/* 17px */
+  --fs-body:       0.9375rem;/* 15px */
+  --fs-caption:    0.8125rem;/* 13px */
+  --fs-micro:      0.6875rem;/* 11px — eyebrow / label */
+
+  /* ---- Weights ---- */
+  --fw-light: 300;     /* @kind other */
+  --fw-regular: 400;   /* @kind other */
+  --fw-medium: 500;    /* @kind other */
+  --fw-semibold: 600;  /* @kind other */
+
+  /* ---- Line heights ---- */
+  --lh-tight: 1.04;    /* @kind other */
+  --lh-snug:  1.22;    /* @kind other */
+  --lh-normal:1.5;     /* @kind other */
+  --lh-loose: 1.7;     /* @kind other */
+
+  /* ---- Tracking (letter-spacing) ---- */
+  --tracking-display:  0.06em;  /* @kind spacing */
+  --tracking-deco:     0.22em;  /* @kind spacing */
+  --tracking-eyebrow:  0.34em;  /* @kind spacing */
+  --tracking-body:     0.005em; /* @kind spacing */
+  --tracking-tight:   -0.01em;  /* @kind spacing */
+}

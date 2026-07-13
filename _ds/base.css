@@ -1,0 +1,91 @@
+/* ============================================================
+   BASE — Sous Le Parasol
+   Light, opinionated resets + brand defaults. Not a framework.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--tracking-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--selection-bg); }
+
+/* ---- Display / headings default to engraved caps ---- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-display);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-4);
+}
+
+p { margin: 0 0 var(--space-4); text-wrap: pretty; }
+
+a { color: var(--text-secondary); text-underline-offset: 0.18em; }
+
+/* ---- Brand utility classes ---- */
+.slp-eyebrow {
+  font-family: var(--font-deco);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.slp-deco {
+  font-family: var(--font-deco);
+  letter-spacing: var(--tracking-deco);
+  text-transform: uppercase;
+}
+
+/* The house wordmark, typeset: small "LE" between the two words */
+.slp-wordmark {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-display);
+  line-height: 1.05;
+  color: var(--text-primary);
+}
+.slp-wordmark .le {
+  font-size: 0.5em;
+  letter-spacing: 0.12em;
+  vertical-align: 0.12em;
+  margin: 0 0.12em;
+}
+
+/* A fine engraved rule, as used on packaging lockups */
+.slp-rule {
+  border: 0;
+  border-top: var(--hairline) solid var(--border-strong);
+  margin: var(--space-4) 0;
+}
+
+/* Sand-paper texture wash (subtle, procedural) */
+.slp-paper {
+  background-color: var(--surface-card);
+  background-image:
+    radial-gradient(rgba(124,106,79,0.045) 1px, transparent 1.4px),
+    radial-gradient(rgba(124,106,79,0.035) 1px, transparent 1.4px);
+  background-size: 7px 7px, 11px 11px;
+  background-position: 0 0, 3px 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

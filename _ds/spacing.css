@@ -1,0 +1,32 @@
+/* ============================================================
+   SPACING & RADII — Sous Le Parasol
+   4px base grid. Art-Deco rectilinearity: radii stay small.
+   ============================================================ */
+
+:root {
+  /* ---- Spacing scale (4px base) ---- */
+  --space-1:  0.25rem;  /* 4 */
+  --space-2:  0.5rem;   /* 8 */
+  --space-3:  0.75rem;  /* 12 */
+  --space-4:  1rem;     /* 16 */
+  --space-5:  1.5rem;   /* 24 */
+  --space-6:  2rem;     /* 32 */
+  --space-7:  3rem;     /* 48 */
+  --space-8:  4rem;     /* 64 */
+  --space-9:  6rem;     /* 96 */
+  --space-10: 8rem;     /* 128 */
+
+  /* ---- Radii (kept tight — the brand is squared & engraved) ---- */
+  --radius-xs:  2px;
+  --radius-sm:  3px;
+  --radius-md:  5px;
+  --radius-lg:  8px;
+  --radius-xl:  14px;
+  --radius-pill: 999px;
+
+  /* ---- Layout ---- */
+  --container-narrow: 42rem;
+  --container:        64rem;
+  --container-wide:   80rem;
+  --hairline: 1px;
+}

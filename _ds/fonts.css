@@ -1,0 +1,16 @@
+/* ============================================================
+   FONTS — Sous Le Parasol
+   ------------------------------------------------------------
+   Brand specifies the display face "Ergon" (an Art-Deco–influenced
+   high-contrast serif) for the logo / fragrance names / titles, paired
+   with Helvetica for body & UI. A geometric Art-Deco sans is used on the
+   ruled "PARIS 1936" lockups and labels.
+
+   SUBSTITUTIONS (no original binaries supplied):
+   - Ergon            -> Marcellus      (classical engraved caps, Trajan lineage)
+   - Deco geometric   -> Josefin Sans   (1920s geometric, high-waisted)
+   - Helvetica        -> system Helvetica Neue / Arimo fallback (brand-spec face)
+   Replace these with the licensed faces when available.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Josefin+Sans:wght@300;400;500;600;700&display=swap');
