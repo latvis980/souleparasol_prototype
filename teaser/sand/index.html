@@ -160,7 +160,7 @@ const P = {
   lightAz: 236,    // light azimuth, degrees (upper-left)
   grain: 0.045,    // grain overlay opacity
   sndGain: 1.0,    // master sound gain multiplier
-  waveSpeed: 2.4,  // wash sweep duration, seconds
+  waveSpeed: 3.1,  // wash sweep duration, seconds
   idleDelay: 2.6   // seconds of lifted finger before the wash
 };
 const LS_KEY = 'slpSandTuning';
@@ -188,7 +188,7 @@ let phase='rest';
 let dirty=true, wetActive=false;
 let drawing=false, activePtr=null, lastX=0, lastY=0, lastT=0, emaSpeed=0;
 let samples=0, firstDrawT=0, lastLiftT=0;
-let washActive=false, washT0=0, frontY=1e9, washDone=false, washAlpha=1, washFadeT0=0;
+let washActive=false, washT0=0, frontY=1e9, flooded=false;
 let rafId=0, lastFrame=0, fpsN=0, fpsT=0, fpsEl=null;
 
 const clamp=(v,a,b)=>v<a?a:v>b?b:v;
@@ -244,7 +244,9 @@ function buildGrid(preserve){
   img=offctx.createImageData(gw,gh);
   foamOff=new Float32Array(gw); foamRow=new Float32Array(gw);
   const p1=Math.random()*6, p2=Math.random()*6;
-  for (let x=0;x<gw;x++) foamOff[x]=Math.sin(x*0.17+p1)*1.3+Math.sin(x*0.047+p2)*2.1;
+  // rolling, ruffled waterline: long lobes with a small ripple on top
+  for (let x=0;x<gw;x++)
+    foamOff[x]=Math.sin(x*0.045+p1)*5.5+Math.sin(x*0.013+p2)*3.5+Math.sin(x*0.11+p1*2)*1.2;
   buildGrain();
   if (fpsEl) updateDbgInfo();
   dirty=true;
@@ -321,10 +323,10 @@ function render(now){
   const wR=C_WET[0],wG=C_WET[1],wB=C_WET[2];
   const w1R=C_W1[0],w1G=C_W1[1],w1B=C_W1[2];
   const w2R=C_W2[0],w2G=C_W2[1],w2B=C_W2[2];
-  const foamOn=washActive;
+  const foamOn=washActive||flooded;
   if (foamOn){
     const t=now*0.004;
-    for (let x=0;x<gw;x++) foamRow[x]=frontY+foamOff[x]+Math.sin(t+x*0.31)*0.7;
+    for (let x=0;x<gw;x++) foamRow[x]=frontY+foamOff[x]+Math.sin(t+x*0.09)*1.5;
   }
   let j=0;
   for (let y=0;y<gh;y++){
@@ -350,20 +352,19 @@ function render(now){
       // wet band
       const wv=wet[i];
       if (wv>0){ const t=wv*0.25; r+=(wR-r)*t; g+=(wG-g)*t; b+=(wB-b)*t; }
-      // the wave: a pale crest, then a near-opaque aqua sheet covering
-      // everything behind the front; the sheet fades out after the sweep
+      // the wave: a faint pale rim on a ruffled waterline, then a
+      // near-opaque aqua sheet that stays after the wash
       if (foamOn){
         const fd=y-foamRow[x];
-        if (fd>-1.5){
-          if (!washDone&&fd<2.5){
-            const a=0.6*(fd<0?(1.5+fd)/1.5:1-fd/2.5);
+        if (fd>-1){
+          if (washActive&&fd<1.5){
+            const a=0.3*(fd<0?1+fd:1-fd/1.5);
             r+=(255-r)*a; g+=(255-g)*a; b+=(255-b)*a;
           }
           if (fd>0){
-            const a=0.82*washAlpha;
             const cm=Math.min(1,fd/18);
             const qr=w1R+(w2R-w1R)*cm, qg=w1G+(w2G-w1G)*cm, qb=w1B+(w2B-w1B)*cm;
-            r+=(qr-r)*a; g+=(qg-g)*a; b+=(qb-b)*a;
+            r+=(qr-r)*0.82; g+=(qg-g)*0.82; b+=(qb-b)*0.82;
           }
         }
       }
@@ -390,47 +391,37 @@ function startWash(){
   if (phase!=='draw'&&phase!=='rest') return;
   setPhase('wash');
   audioWave();
-  if (REDUCED){ // no wave animation: straight to the clean surface and the form
-    seedNoise(h); wet.fill(0); dirty=true;
+  if (REDUCED){ // no wave animation: straight to the flooded state and the form
+    flood();
     showInvite();
     return;
   }
-  washActive=true; washDone=false; washAlpha=1; washT0=performance.now();
+  washActive=true; washT0=performance.now();
+}
+function flood(){ // the water stays — the form lives on the blue
+  washActive=false; flooded=true;
+  frontY=-60;
+  seedNoise(h); wet.fill(0); wetActive=false;
+  dirty=true;
 }
 function updateWash(now,dt){
-  const M=50;
-  if (!washDone){
-    const t=Math.min(1,(now-washT0)/(P.waveSpeed*1000));
-    const e=easeInOutCubic(t);
-    frontY=gh+M-e*(gh+2*M);
-    const yStart=Math.max(0,Math.ceil(frontY));
-    for (let y=yStart;y<gh;y++){
-      const dist=y-frontY;
-      if (dist<=0) continue;
-      const k=Math.min(1, Math.min(1,dist/40)*dt*6);
-      const wetSet=dist<44;
-      const row=y*gw;
-      for (let x=0;x<gw;x++){
-        const i=row+x;
-        h[i]*=1-k;
-        if (wetSet&&wet[i]<1){ wet[i]=1; wetActive=true; }
-      }
-    }
-    if (t>=1){
-      // clean surface is laid down while the water still covers it,
-      // so the fade-out reveals fresh sand with no visible pop
-      washDone=true; washFadeT0=now;
-      seedNoise(h);
-    }
-  } else {
-    const f=Math.min(1,(now-washFadeT0)/1200);
-    washAlpha=1-easeInOutCubic(f);
-    if (f>=1){
-      washActive=false;
-      setTimeout(showInvite,400);
-    }
+  const M=60;
+  const t=Math.min(1,(now-washT0)/(P.waveSpeed*1000));
+  const e=easeInOutCubic(t);
+  frontY=gh+M-e*(gh+2*M);
+  const yStart=Math.max(0,Math.ceil(frontY));
+  for (let y=yStart;y<gh;y++){
+    const dist=y-frontY;
+    if (dist<=0) continue;
+    const k=Math.min(1, Math.min(1,dist/40)*dt*6);
+    const row=y*gw;
+    for (let x=0;x<gw;x++) h[row+x]*=1-k;
   }
   dirty=true;
+  if (t>=1){
+    flood();
+    setTimeout(showInvite,400);
+  }
 }
 function decayWet(dt){
   let any=false;
@@ -759,6 +750,7 @@ if (STAGE==='draw'){
   samples=60;
   setTimeout(startWash,400);
 } else if (STAGE==='form'){
+  flood();
   setPhase('form');
   showInvite();
 } else {
