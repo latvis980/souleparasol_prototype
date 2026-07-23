@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>Sous Le Parasol — Sand</title>
-<meta name="theme-color" content="#D6C5A8">
+<meta name="theme-color" content="#EDE8DA">
 <style>
   /* Tokens from _ds/sous-le-parasol design system. Fonts fall back to the
      system stacks declared there — no network requests on this page. */
   :root{
-    --sand-base:#D6C5A8; --sand-hi:#F6F1E7; --sand-sh:#6B5238; --sand-wet:#7A5233;
+    --sand-base:#EDE8DA; --sand-hi:#FCF9F1; --sand-sh:#6B5238; --sand-wet:#7A5233;
     --ink:#211913; --muted:#9D8A6B; --accent:#9E4B36; --umber:#6B5238;
     --font-display:'Marcellus','Times New Roman',serif;
     --font-deco:'Josefin Sans','Century Gothic',system-ui,sans-serif;
@@ -155,10 +155,10 @@ if (DEBUG) console.log('[sand] meta in-app browser:', META_BROWSER, '| ua:', nav
 const P = {
   depth: 0.55,     // carve depth per pass
   ridge: 0.85,     // fraction of removed volume pushed into the ridge
-  brush: 9,        // carve radius, grid cells
+  brush: 6,        // carve radius, grid cells
   relief: 3.0,     // normal-map exaggeration
   lightAz: 236,    // light azimuth, degrees (upper-left)
-  grain: 0.06,     // grain overlay opacity
+  grain: 0.045,    // grain overlay opacity
   sndGain: 1.0,    // master sound gain multiplier
   waveSpeed: 2.4,  // wash sweep duration, seconds
   idleDelay: 2.6   // seconds of lifted finger before the wash
@@ -173,7 +173,8 @@ if (DEBUG) {
 
 /* ---------------- colours (design-system tokens) ---------------- */
 function hex(s){ return [parseInt(s.slice(1,3),16), parseInt(s.slice(3,5),16), parseInt(s.slice(5,7),16)]; }
-const C_BASE = hex('#D6C5A8'), C_HI = hex('#F6F1E7'), C_SH = hex('#6B5238'), C_WET = hex('#7A5233');
+const C_BASE = hex('#EDE8DA'), C_HI = hex('#FCF9F1'), C_SH = hex('#6B5238'), C_WET = hex('#7A5233');
+const C_W1 = hex('#C4EDED'), C_W2 = hex('#8DDCDC'); // wave blues, front → deep
 
 /* ---------------- state ---------------- */
 const cv = document.getElementById('sand');
@@ -185,7 +186,7 @@ let Lx=0, Ly=0, Lz=0.44, midLam=0.44;
 let carveK=null, ridgeK=null, kOut=0;
 let phase='rest';
 let dirty=true, wetActive=false;
-let drawing=false, activePtr=null, lastX=0, lastY=0, lastT=0;
+let drawing=false, activePtr=null, lastX=0, lastY=0, lastT=0, emaSpeed=0;
 let samples=0, firstDrawT=0, lastLiftT=0;
 let washActive=false, washT0=0, frontY=1e9, washDone=false;
 let rafId=0, lastFrame=0, fpsN=0, fpsT=0, fpsEl=null;
@@ -232,7 +233,7 @@ function buildGrid(preserve){
   W=window.innerWidth; H=window.innerHeight;
   DPR=Math.min(window.devicePixelRatio||1, 2);
   cv.width=Math.round(W*DPR); cv.height=Math.round(H*DPR);
-  gw=Math.max(2,Math.ceil(W/2)); gh=Math.max(2,Math.ceil(H/2));
+  gw=Math.max(2,Math.ceil(W/1.7)); gh=Math.max(2,Math.ceil(H/1.7));
   const cap=110000;
   if (gw*gh>cap){ const f=Math.sqrt(gw*gh/cap); gw=Math.max(2,Math.floor(gw/f)); gh=Math.max(2,Math.floor(gh/f)); }
   h=(preserve&&oldH)?resample(oldH,ow,oh,gw,gh):new Float32Array(gw*gh);
@@ -299,7 +300,7 @@ function stamp(cx,cy,depth){
 }
 function carveLine(gx0,gy0,gx1,gy1,speed){
   const dx=gx1-gx0, dy=gy1-gy0, dist=Math.hypot(dx,dy);
-  const n=Math.max(1,Math.ceil(dist/1.5)); // interpolate — no dotted gaps on fast drags
+  const n=Math.max(1,Math.ceil(dist/1.1)); // interpolate — no dotted gaps on fast drags
   const sc=clamp(0.35+speed*0.9, 0.35, 1);
   for (let i=1;i<=n;i++) stamp(gx0+dx*i/n, gy0+dy*i/n, P.depth*sc);
   dirty=true;
@@ -318,6 +319,8 @@ function render(now){
   const hR=C_HI[0],hG=C_HI[1],hB=C_HI[2];
   const sR=C_SH[0],sG=C_SH[1],sB=C_SH[2];
   const wR=C_WET[0],wG=C_WET[1],wB=C_WET[2];
+  const w1R=C_W1[0],w1G=C_W1[1],w1B=C_W1[2];
+  const w2R=C_W2[0],w2G=C_W2[1],w2B=C_W2[2];
   const foamOn=washActive;
   if (foamOn){
     const t=now*0.004;
@@ -346,13 +349,21 @@ function render(now){
       if (occ>0){ const s=1-Math.min(occ*2.2,0.35); r*=s; g*=s; b*=s; }
       // wet band
       const wv=wet[i];
-      if (wv>0){ const t=wv*0.35; r+=(wR-r)*t; g+=(wG-g)*t; b+=(wB-b)*t; }
-      // foam edge
+      if (wv>0){ const t=wv*0.25; r+=(wR-r)*t; g+=(wG-g)*t; b+=(wB-b)*t; }
+      // the wave: a thin pale crest, then a translucent blue sheet draining out
       if (foamOn){
         const fd=y-foamRow[x];
-        if (fd>-1.5&&fd<4.5){
-          const a=0.55*(fd<0?(1.5+fd)/1.5:1-fd/4.5);
-          r+=(255-r)*a; g+=(255-g)*a; b+=(255-b)*a;
+        if (fd>-1.5){
+          if (fd<2.5){
+            const a=0.5*(fd<0?(1.5+fd)/1.5:1-fd/2.5);
+            r+=(255-r)*a; g+=(255-g)*a; b+=(255-b)*a;
+          }
+          if (fd>0&&fd<46){
+            const a=0.55*(1-fd/46);
+            const cm=Math.min(1,fd/14);
+            const qr=w1R+(w2R-w1R)*cm, qg=w1G+(w2G-w1G)*cm, qb=w1B+(w2B-w1B)*cm;
+            r+=(qr-r)*a; g+=(qg-g)*a; b+=(qb-b)*a;
+          }
         }
       }
       d[j++]=r; d[j++]=g; d[j++]=b; d[j++]=255;
@@ -528,7 +539,7 @@ function onDown(x,y,id){
   if (phase==='rest') setPhase('draw');
   initAudio();
   try { if (navigator.vibrate) navigator.vibrate(8); } catch(e){}
-  drawing=true; activePtr=id;
+  drawing=true; activePtr=id; emaSpeed=0;
   lastX=x; lastY=y; lastT=performance.now();
   if (!firstDrawT) firstDrawT=lastT;
   stamp(cssToGridX(x),cssToGridY(y),P.depth*0.5);
@@ -539,10 +550,11 @@ function onMove(x,y,tEv){
   const now=tEv||performance.now();
   const dt=Math.max(1,now-lastT);
   const speed=Math.hypot(x-lastX,y-lastY)/dt;
-  carveLine(cssToGridX(lastX),cssToGridY(lastY),cssToGridX(x),cssToGridY(y),speed);
+  emaSpeed+=(speed-emaSpeed)*0.3; // smoothed, so carve depth doesn't flutter into ribs
+  carveLine(cssToGridX(lastX),cssToGridY(lastY),cssToGridX(x),cssToGridY(y),emaSpeed);
   samples++;
   lastX=x; lastY=y; lastT=now;
-  audioSand(speed);
+  audioSand(emaSpeed);
   audioJingle(performance.now());
 }
 function onUp(){
@@ -670,7 +682,7 @@ function buildDebug(){
   const DEFS=[
     ['depth','carve depth',0.1,1.2,0.01],
     ['ridge','ridge amount',0,1.5,0.01],
-    ['brush','brush radius',4,16,1],
+    ['brush','brush radius',3,16,1],
     ['relief','relief',0.5,6,0.1],
     ['lightAz','light angle°',0,360,1],
     ['grain','grain opacity',0,0.2,0.005],
